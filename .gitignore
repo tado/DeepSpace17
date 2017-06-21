@@ -137,3 +137,4 @@ Desktop.ini
 *.opendb
 *.db
 ofxTuioExample/ofxTuioExample.VC.db
+*.db
