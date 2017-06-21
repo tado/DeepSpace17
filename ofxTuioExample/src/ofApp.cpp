@@ -9,10 +9,11 @@ void ofApp::setup(){
     ofAddListener(tuio.cursorUpdated,this,&ofApp::tuioUpdated);
     ofSetFrameRate(60);
     ofBackground(0,0,0);
+	ofEnableSmoothing();
+	ofHideCursor();
     
     tuio.start(3333);
     log="";
-    myImage.loadImage("images/photo.png");
 }
 
 void ofApp::update(){
@@ -21,20 +22,39 @@ void ofApp::update(){
 
 void ofApp::draw(){
     list<ofxTuioObject*> objectList = tuio.getTuioObjects();
-    list<ofxTuioObject*>::iterator it;
-    for (it=objectList.begin(); it != objectList.end(); it++) {
+	float circleSize = ofGetWidth() / 80;
+	ofSetColor(255);
+	ofSetCircleResolution(64);
+	ofNoFill();
+	ofSetLineWidth(4);
+	
+	//draw circle
+    for (auto it=objectList.begin(); it != objectList.end(); it++) {
         ofxTuioObject *blob = (*it);
-        glPushMatrix();
-        glTranslatef(blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight(), 0.0);
-        ofDrawBitmapString("id = " + ofToString(blob->getFiducialId(), 0), -64, 80);
-        glRotatef(blob->getAngleDegrees(), 0.0, 0.0, 1.0);
-        ofSetColor(255, 255, 255);
-        myImage.draw(-64, -64);
-        glPopMatrix();
+		ofPushMatrix();
+        ofTranslate(blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight());
+		ofDrawCircle(0, 0, circleSize, circleSize);
+        ofPopMatrix();
     }
-    
-    ofSetColor(0xffffff);
-    ofDrawBitmapString(log, 20, 20);
+
+	//draw lines
+	ofSetLineWidth(3);
+	for (auto i = objectList.begin(); i != objectList.end(); i++) {
+		for (auto j = i; j != objectList.end(); j++) {
+			ofxTuioObject *blobi = (*i);
+			ofxTuioObject *blobj = (*j);
+			ofVec2f begin = ofVec2f(blobi->getX()*ofGetWidth(), blobi->getY()*ofGetHeight());
+			ofVec2f end = ofVec2f(blobj->getX()*ofGetWidth(), blobj->getY()*ofGetHeight());
+			float dist = begin.distance(end);
+			ofSetColor(255, ofMap(dist, 0, ofGetWidth()/2, 191, 0));
+			ofDrawLine(begin.x, begin.y, end.x, end.y);
+		}
+	}
+	ofSetLineWidth(1);
+	ofFill();
+
+	ofDrawBitmapStringHighlight(log, 40, 40);
+	ofDrawBitmapStringHighlight(ofToString(ofGetFrameRate()) + " fps", 40, 60);
 }
 
 void ofApp::objectAdded(ofxTuioObject & tuioObject){

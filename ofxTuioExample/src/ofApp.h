@@ -19,5 +19,4 @@ public:
     
     ofxTuioClient tuio;
     string log;
-    ofImage myImage;
 };
