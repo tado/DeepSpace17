@@ -133,3 +133,7 @@ Desktop.ini
 
 .mailmap
 /apps*/
+*.db
+*.opendb
+*.db
+ofxTuioExample/ofxTuioExample.VC.db
