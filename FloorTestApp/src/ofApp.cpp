@@ -22,7 +22,7 @@ void ofApp::update() {
 
 void ofApp::draw() {
 	list<ofxTuioObject*> objectList = tuio.getTuioObjects();
-	float circleSize = ofGetWidth() / 80;
+	float circleSize = ofGetWidth() / 40.0;
 	ofSetColor(255);
 	ofSetCircleResolution(64);
 	ofNoFill();
@@ -31,7 +31,7 @@ void ofApp::draw() {
 	//draw circle
 	for (auto it = objectList.begin(); it != objectList.end(); it++) {
 		ofxTuioObject *blob = (*it);
-		ofDrawCircle(blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight(), circleSize, circleSize);
+		ofDrawCircle(blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight(), circleSize);
 	}
 
 	//draw lines
