@@ -1,17 +1,16 @@
 #include "ofApp.h"
 
 void ofApp::setup(){
+	scale = 4.0;
+
 	ISFLayer *il;
 	il = new ISFLayer("ISF/swirl.fs");
 	isfLayers.push_back(il);
 	il = new ISFLayer("ISF/stripe.fs");
 	isfLayers.push_back(il);
-	//il = new ISFLayer("ISF/topo.fs");
-	//isfLayers.push_back(il);
 
-    
     //Postprocessing
-    post.init(ofGetWidth(), ofGetHeight());
+    post.init(ofGetWidth()/scale, ofGetHeight()/scale);
     //bloom = post.createPass<BloomPass>();
     kaleido = post.createPass<KaleidoscopePass>();
     noise = post.createPass<NoiseWarpPass>();
@@ -41,7 +40,7 @@ void ofApp::update(){
         isfLayers[i]->update();
     }
     
-    int div = int(ofRandom(20)) + 1;
+    int div = int(ofRandom(30)) + 1;
     if (ofGetFrameNum() % div == 0) {
         restPostProcess();
         for (int i = 0; i < 2; i++) {
@@ -71,12 +70,15 @@ void ofApp::update(){
 void ofApp::draw(){
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
     ofBackground(0);
+	ofPushMatrix();
+	ofScale(scale, scale);
     post.begin();
     ofEnableBlendMode(OF_BLENDMODE_ADD);
     for (int i = 0; i < isfLayers.size(); i++) {
         isfLayers[i]->draw();
     }
     post.end();
+	ofPopMatrix();
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
     ofDrawBitmapStringHighlight("post num = " + ofToString(postNum), 40, 40);
     ofDrawBitmapStringHighlight(ofToString(ofGetFrameRate()) + " fps", 40, 60);

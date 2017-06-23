@@ -25,8 +25,8 @@ public:
     void gotMessage(ofMessage msg);
     
     vector<ISFLayer *> isfLayers;
-    
-    //postprocess
+
+	//postprocess
     ofxPostProcessing post;
     //BloomPass::Ptr bloom;
     KaleidoscopePass::Ptr kaleido;
@@ -48,4 +48,5 @@ public:
     ToonPass::Ptr toon;
     
     int postNum;
+	float scale;
 };

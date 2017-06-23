@@ -5,7 +5,7 @@ ISFLayer::ISFLayer(string filename){
 
 	ofxISF::Shader *isf;
 	isf = new ofxISF::Shader();
-	isf->setup(ofGetWidth(), ofGetHeight(), GL_RGB32F);
+	isf->setup(ofGetWidth()/4, ofGetHeight()/4, GL_RGB32F);
 	isf->load(filename);
 	isfs.push_back(isf);
 }
