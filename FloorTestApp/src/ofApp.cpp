@@ -8,8 +8,8 @@ void ofApp::setup() {
 	ofAddListener(tuio.cursorRemoved, this, &ofApp::tuioRemoved);
 	ofAddListener(tuio.cursorUpdated, this, &ofApp::tuioUpdated);
 	ofSetFrameRate(60);
-	ofBackground(0, 0, 0);
-	ofEnableSmoothing();
+	ofBackground(0);
+	//ofEnableSmoothing();
 	ofHideCursor();
 
 	tuio.start(3333);
