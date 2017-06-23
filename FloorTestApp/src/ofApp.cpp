@@ -9,9 +9,9 @@ void ofApp::setup() {
 	ofAddListener(tuio.cursorUpdated, this, &ofApp::tuioUpdated);
 	ofSetFrameRate(60);
 	ofBackground(0);
-	//ofEnableSmoothing();
+	ofEnableSmoothing();
+	glEnable(GL_POINT_SMOOTH);
 	ofHideCursor();
-
 	tuio.start(3333);
 	log = "";
 }

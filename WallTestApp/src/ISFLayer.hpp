@@ -1,10 +1,11 @@
 #pragma once
 #include "ofMain.h"
-#include "ofxIO.h"
+//#include "ofxIO.h"
 //#include "ISFDIrt.hpp"
 #include "ofxISF.h"
 
 // a custom hidden path filter
+/*
 class CustomPathFilter: public ofxIO::AbstractPathFilter{
 public:
     CustomPathFilter(){
@@ -18,10 +19,11 @@ public:
         !ofIsStringInString(path.toString(), "FilterMeOut");
     }
 };
+*/
 
 class ISFLayer {
 public:
-    ISFLayer(int layer);
+    ISFLayer(string filename);
     void update();
     void draw();
     
@@ -32,5 +34,5 @@ public:
     float gain;
     
     //IO
-    CustomPathFilter pathFilter;
+    //CustomPathFilter pathFilter;
 };

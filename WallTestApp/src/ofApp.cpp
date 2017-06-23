@@ -1,12 +1,14 @@
 #include "ofApp.h"
 
 void ofApp::setup(){
-    for (int i = 0; i < 2; i++) {
-        ISFLayer *il = new ISFLayer(i);
-        isfLayers.push_back(il);
-    }
-    isfLayers[0]->currentISF = "swirl";
-    isfLayers[1]->currentISF = "stripe";
+	ISFLayer *il;
+	il = new ISFLayer("ISF/swirl.fs");
+	isfLayers.push_back(il);
+	il = new ISFLayer("ISF/stripe.fs");
+	isfLayers.push_back(il);
+	//il = new ISFLayer("ISF/topo.fs");
+	//isfLayers.push_back(il);
+
     
     //Postprocessing
     post.init(ofGetWidth(), ofGetHeight());
@@ -16,7 +18,7 @@ void ofApp::setup(){
     rgb = post.createPass<RGBShiftPass>();
     edge = post.createPass<EdgePass>();
     pixel = post.createPass<PixelatePass>();
-    pixel->resolution = ofVec2f(40.0, 40.0);
+    //pixel->resolution = ofVec2f(40.0, 40.0);
     darken = post.createPass<LimbDarkeningPass>();
     contrast = post.createPass<ContrastPass>();
     conv = post.createPass<ConvolutionPass>();
@@ -84,7 +86,7 @@ void ofApp::draw(){
 void ofApp::restPostProcess(){
     //bloom->setEnabled(false);
     kaleido->setEnabled(false);
-    noise->setEnabled(true);
+    noise->setEnabled(false);
     rgb->setEnabled(false);
     edge->setEnabled(false);
     pixel->setEnabled(false);
