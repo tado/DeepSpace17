@@ -19,4 +19,5 @@ public:
 
 	ofxTuioClient tuio;
 	string log;
+    ofxOscSender sender;
 };

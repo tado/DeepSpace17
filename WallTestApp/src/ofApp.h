@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ISFLayer.hpp"
 #include "ofxPostProcessing.h"
+#include "ofxOsc.h"
 
 class ofApp : public ofBaseApp{
     
@@ -49,4 +50,7 @@ public:
     
     int postNum;
 	float scale;
+    ofxOscReceiver receiver;
+    int objectNum;
+    vector<ofVec2f> objectLoc;
 };

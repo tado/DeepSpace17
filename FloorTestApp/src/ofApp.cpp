@@ -1,6 +1,10 @@
 #include "ofApp.h"
 
 void ofApp::setup() {
+    //OSC to wall
+    sender.setup("127.0.0.1", 20000);
+
+    //TUIO
 	ofAddListener(tuio.objectAdded, this, &ofApp::objectAdded);
 	ofAddListener(tuio.objectRemoved, this, &ofApp::objectRemoved);
 	ofAddListener(tuio.objectUpdated, this, &ofApp::objectUpdated);
@@ -27,6 +31,21 @@ void ofApp::draw() {
 	ofSetCircleResolution(64);
 	ofNoFill();
 	ofSetLineWidth(4);
+
+    //send OSC message
+    ofxOscMessage mn;
+    mn.setAddress("/floor/objectNum");
+    mn.addIntArg(objectList.size());
+    sender.sendMessage(mn, false);
+    ofxOscMessage ml;
+    ml.setAddress("/floor/objectLoc");
+    for (auto it = objectList.begin(); it != objectList.end(); it++) {
+        ofxTuioObject *blob = (*it);
+        ofDrawCircle(blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight(), circleSize);
+        ml.addIntArg(blob->getX()*ofGetWidth());
+        ml.addIntArg(blob->getY()*ofGetWidth());
+    }
+    sender.sendMessage(ml, false);
 
 	//draw circle
 	for (auto it = objectList.begin(); it != objectList.end(); it++) {

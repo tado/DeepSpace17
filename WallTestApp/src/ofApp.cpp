@@ -1,8 +1,13 @@
 #include "ofApp.h"
 
 void ofApp::setup(){
-	scale = 4.0;
+    //OSC receiver
+    receiver.setup(20000);
 
+    //Shader resolution
+	scale = 4.0;
+    
+    //init ISF list
 	ISFLayer *il;
 	il = new ISFLayer("ISF/swirl.fs");
 	isfLayers.push_back(il);
@@ -36,6 +41,23 @@ void ofApp::setup(){
 }
 
 void ofApp::update(){
+    objectLoc.clear();
+    
+    //receiver OSC messages
+    while(receiver.hasWaitingMessages()){
+        ofxOscMessage m;
+        receiver.getNextMessage(m);
+        if(m.getAddress() == "/floor/objectNum"){
+            objectNum = m.getArgAsInt32(0);
+        }
+        else if(m.getAddress() == "/floor/objectLoc"){
+            for(int i = 0; i < m.getNumArgs(); i+=2){
+                ofVec2f loc = ofVec2f(m.getArgAsInt32(i), m.getArgAsInt32(i+1));
+                objectLoc.push_back(loc);
+            }
+        }
+    }
+
     for (int i = 0; i < isfLayers.size(); i++) {
         isfLayers[i]->update();
     }
@@ -74,14 +96,23 @@ void ofApp::draw(){
 	ofScale(scale, scale);
     post.begin();
     ofEnableBlendMode(OF_BLENDMODE_ADD);
+    ofSetColor(255);
     for (int i = 0; i < isfLayers.size(); i++) {
         isfLayers[i]->draw();
     }
     post.end();
 	ofPopMatrix();
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-    ofDrawBitmapStringHighlight("post num = " + ofToString(postNum), 40, 40);
-    ofDrawBitmapStringHighlight(ofToString(ofGetFrameRate()) + " fps", 40, 60);
+    ofDrawBitmapStringHighlight(ofToString(ofGetFrameRate()) + " fps", 40, 40);
+    //ofDrawBitmapStringHighlight("Post num = " + ofToString(postNum), 40, 60);
+    ofDrawBitmapStringHighlight("Object num = " + ofToString(objectNum), 40, 60);
+    
+    //draw objects
+    ofSetColor(0, 255, 255);
+    int size = ofGetWidth()/150;
+    for (int i = 0; i < objectLoc.size(); i++) {
+        ofDrawCircle(objectLoc[i], size);
+    }
 }
 
 
@@ -89,7 +120,7 @@ void ofApp::restPostProcess(){
     //bloom->setEnabled(false);
     kaleido->setEnabled(false);
     noise->setEnabled(false);
-    rgb->setEnabled(false);
+    rgb->setEnabled(true);
     edge->setEnabled(false);
     pixel->setEnabled(false);
     darken->setEnabled(false);
