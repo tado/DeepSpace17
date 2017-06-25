@@ -20,7 +20,7 @@
 		"TYPE": "float",
 		"MIN": 1.0,
 		"MAX": 1000.0,
-		"DEFAULT": 800.0
+		"DEFAULT": 100.0
     },
     {
     	"NAME": "weveDepth",
@@ -34,8 +34,8 @@
     	"NAME": "timeScale",
 		"TYPE": "float",
 		"MIN": 0.1,
-		"MAX": 3.0,
-		"DEFAULT": 1.0
+		"MAX": 10.0,
+		"DEFAULT": 3.0
     }
     ,
     {

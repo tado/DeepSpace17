@@ -5,24 +5,24 @@ void ofApp::setup(){
     receiver.setup(20000);
 
     //Shader resolution
-	scale = 4.0;
+	scale = 1.0;
     
     //init ISF list
 	ISFLayer *il;
-	il = new ISFLayer("ISF/swirl.fs");
+    il = new ISFLayer("ISF/swirl.fs");
 	isfLayers.push_back(il);
 	il = new ISFLayer("ISF/stripe.fs");
 	isfLayers.push_back(il);
+    //il = new ISFLayer("ISF/ripple.fs");
+    //isfLayers.push_back(il);
 
     //Postprocessing
     post.init(ofGetWidth()/scale, ofGetHeight()/scale);
-    //bloom = post.createPass<BloomPass>();
     kaleido = post.createPass<KaleidoscopePass>();
     noise = post.createPass<NoiseWarpPass>();
     rgb = post.createPass<RGBShiftPass>();
     edge = post.createPass<EdgePass>();
     pixel = post.createPass<PixelatePass>();
-    //pixel->resolution = ofVec2f(40.0, 40.0);
     darken = post.createPass<LimbDarkeningPass>();
     contrast = post.createPass<ContrastPass>();
     conv = post.createPass<ConvolutionPass>();
@@ -33,7 +33,6 @@ void ofApp::setup(){
     htilt = post.createPass<HorizontalTiltShifPass>();
     god = post.createPass<GodRaysPass>();
     bleach = post.createPass<BleachBypassPass>();
-    //lut = post.createPass<LUTPass>();
     toon = post.createPass<ToonPass>();
     restPostProcess();
     
@@ -67,7 +66,6 @@ void ofApp::update(){
         restPostProcess();
         for (int i = 0; i < 2; i++) {
             postNum = int(ofRandom(15));
-            //if (postNum == 0) bloom->setEnabled(true);
             if (postNum == 0) kaleido->setEnabled(true);
             if (postNum == 1) noise->setEnabled(true);
             if (postNum == 2) rgb->setEnabled(true);
@@ -83,7 +81,6 @@ void ofApp::update(){
             if (postNum == 12) htilt->setEnabled(true);
             if (postNum == 13) god->setEnabled(true);
             if (postNum == 14) bleach->setEnabled(true);
-            //if (postNum == 16) lut->setEnabled(true);
             if (postNum == 15) toon->setEnabled(true);
         }
     }
@@ -103,8 +100,8 @@ void ofApp::draw(){
     post.end();
 	ofPopMatrix();
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-    ofDrawBitmapStringHighlight(ofToString(ofGetFrameRate()) + " fps", 40, 40);
     //ofDrawBitmapStringHighlight("Post num = " + ofToString(postNum), 40, 60);
+    ofDrawBitmapStringHighlight(ofToString(ofGetFrameRate()) + " fps", 40, 40);
     ofDrawBitmapStringHighlight("Object num = " + ofToString(objectNum), 40, 60);
     
     //draw objects
@@ -120,7 +117,7 @@ void ofApp::restPostProcess(){
     //bloom->setEnabled(false);
     kaleido->setEnabled(false);
     noise->setEnabled(false);
-    rgb->setEnabled(true);
+    rgb->setEnabled(false);
     edge->setEnabled(false);
     pixel->setEnabled(false);
     darken->setEnabled(false);
