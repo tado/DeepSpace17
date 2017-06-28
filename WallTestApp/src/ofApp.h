@@ -1,9 +1,10 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ISFLayer.hpp"
+//#include "ISFLayer.hpp"
 #include "ofxPostProcessing.h"
 #include "ofxOsc.h"
+#include "ofxGLSLSimplexNoise.h"
 
 class ofApp : public ofBaseApp{
     
@@ -25,7 +26,7 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
-    vector<ISFLayer *> isfLayers;
+    //vector<ISFLayer *> isfLayers;
 
 	//postprocess
     ofxPostProcessing post;
@@ -53,4 +54,5 @@ public:
     ofxOscReceiver receiver;
     int objectNum;
     vector<ofVec2f> objectLoc;
+	ofxGLSLSimplexNoise simplex;
 };

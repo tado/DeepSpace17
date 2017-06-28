@@ -8,13 +8,19 @@ void ofApp::setup(){
 	scale = 1.0;
     
     //init ISF list
-	ISFLayer *il;
-    il = new ISFLayer("ISF/swirl.fs");
-	isfLayers.push_back(il);
-	il = new ISFLayer("ISF/stripe.fs");
-	isfLayers.push_back(il);
+	//ISFLayer *il;
+    //il = new ISFLayer("ISF/swirl.fs");
+	//isfLayers.push_back(il);
+	//il = new ISFLayer("ISF/stripe.fs");
+	//isfLayers.push_back(il);
     //il = new ISFLayer("ISF/ripple.fs");
     //isfLayers.push_back(il);
+
+	simplex.freqR.set(1, 1);
+	simplex.freqG.set(1.2, 1.2);
+	simplex.freqB.set(1.5, 1.5);
+	simplex.mul.set(10.0, 10.0, 10.0);
+	simplex.speed.set(0.3, 0.4, 0.5);
 
     //Postprocessing
     post.init(ofGetWidth()/scale, ofGetHeight()/scale);
@@ -57,21 +63,27 @@ void ofApp::update(){
         }
     }
 
+	/*
     for (int i = 0; i < isfLayers.size(); i++) {
         isfLayers[i]->update();
     }
+	*/
     
     int div = int(ofRandom(30)) + 1;
     if (ofGetFrameNum() % div == 0) {
         restPostProcess();
-        for (int i = 0; i < 2; i++) {
-            postNum = int(ofRandom(15));
+        for (int i = 0; i < 1; i++) {
+            postNum = int(ofRandom(7));
             if (postNum == 0) kaleido->setEnabled(true);
             if (postNum == 1) noise->setEnabled(true);
             if (postNum == 2) rgb->setEnabled(true);
-            if (postNum == 3) edge->setEnabled(true);
+			if (postNum == 3) darken->setEnabled(true);
             if (postNum == 4) pixel->setEnabled(true);
-            if (postNum == 5) darken->setEnabled(true);
+			if (postNum == 5) toon->setEnabled(true);
+			if (postNum == 6) conv->setEnabled(true);
+			if (postNum == 7) contrast->setEnabled(true);
+			/*
+			if (postNum == 3) edge->setEnabled(true);
             if (postNum == 6) contrast->setEnabled(true);
             if (postNum == 7) conv->setEnabled(true);
             if (postNum == 8) dof->setEnabled(true);
@@ -81,7 +93,7 @@ void ofApp::update(){
             if (postNum == 12) htilt->setEnabled(true);
             if (postNum == 13) god->setEnabled(true);
             if (postNum == 14) bleach->setEnabled(true);
-            if (postNum == 15) toon->setEnabled(true);
+			*/
         }
     }
 }
@@ -92,15 +104,18 @@ void ofApp::draw(){
 	ofPushMatrix();
 	ofScale(scale, scale);
     post.begin();
-    ofEnableBlendMode(OF_BLENDMODE_ADD);
+    //ofEnableBlendMode(OF_BLENDMODE_ADD);
     ofSetColor(255);
+	/*
     for (int i = 0; i < isfLayers.size(); i++) {
         isfLayers[i]->draw();
     }
+	*/
+	simplex.draw();
     post.end();
 	ofPopMatrix();
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-    //ofDrawBitmapStringHighlight("Post num = " + ofToString(postNum), 40, 60);
+    ofDrawBitmapStringHighlight("Post num = " + ofToString(postNum), 40, 60);
     ofDrawBitmapStringHighlight(ofToString(ofGetFrameRate()) + " fps", 40, 40);
     ofDrawBitmapStringHighlight("Object num = " + ofToString(objectNum), 40, 60);
     
