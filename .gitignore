@@ -138,3 +138,11 @@ Desktop.ini
 *.db
 ofxTuioExample/ofxTuioExample.VC.db
 *.db
+WallTestApp/config.make
+*.dll
+*.exe
+*.exp
+*.lib
+*.sln
+*.vcxproj
+*.filters
