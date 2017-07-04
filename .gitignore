@@ -152,3 +152,6 @@ WallTestApp/config.make
 *.xcscheme
 *.plist
 *.xcscheme
+*.make
+*.make
+*.xcscheme
