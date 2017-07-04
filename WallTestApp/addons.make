@@ -1,3 +1,3 @@
-ofxISF
+ofxGLSLSimplexNoise
 ofxOsc
 ofxPostProcessing

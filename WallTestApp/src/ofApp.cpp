@@ -46,7 +46,7 @@ void ofApp::setup(){
 }
 
 void ofApp::update(){
-    objectLoc.clear();
+	objectLoc.clear();
     
     //receiver OSC messages
     while(receiver.hasWaitingMessages()){

@@ -2,7 +2,7 @@
 
 void ofApp::setup() {
     //OSC to wall
-    sender.setup("127.0.0.1", 20000);
+    sender.setup("192.168.19.190", 20000);
 
     //TUIO
 	ofAddListener(tuio.objectAdded, this, &ofApp::objectAdded);
@@ -25,7 +25,8 @@ void ofApp::update() {
 }
 
 void ofApp::draw() {
-	list<ofxTuioObject*> objectList = tuio.getTuioObjects();
+	//list<ofxTuioObject*> objectList = tuio.getTuioObjects();
+	list<ofxTuioCursor*> cursorList = tuio.getTuioCursors();
 	float circleSize = ofGetWidth() / 40.0;
 	ofSetColor(255);
 	ofSetCircleResolution(64);
@@ -35,30 +36,30 @@ void ofApp::draw() {
     //send OSC message
     ofxOscMessage mn;
     mn.setAddress("/floor/objectNum");
-    mn.addIntArg(objectList.size());
+    mn.addIntArg(cursorList.size());
     sender.sendMessage(mn, false);
     ofxOscMessage ml;
     ml.setAddress("/floor/objectLoc");
-    for (auto it = objectList.begin(); it != objectList.end(); it++) {
-        ofxTuioObject *blob = (*it);
+    for (auto it = cursorList.begin(); it != cursorList.end(); it++) {
+		ofxTuioCursor *blob = (*it);
         ofDrawCircle(blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight(), circleSize);
         ml.addIntArg(blob->getX()*ofGetWidth());
         ml.addIntArg(blob->getY()*ofGetWidth());
     }
     sender.sendMessage(ml, false);
 
-	//draw circle
-	for (auto it = objectList.begin(); it != objectList.end(); it++) {
-		ofxTuioObject *blob = (*it);
+	//draw circle  
+	for (auto it = cursorList.begin(); it != cursorList.end(); it++) {
+		ofxTuioCursor *blob = (*it);
 		ofDrawCircle(blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight(), circleSize);
 	}
 
 	//draw lines
 	ofSetLineWidth(3);
-	for (auto i = objectList.begin(); i != objectList.end(); i++) {
-		for (auto j = i; j != objectList.end(); j++) {
-			ofxTuioObject *blobi = (*i);
-			ofxTuioObject *blobj = (*j);
+	for (auto i = cursorList.begin(); i != cursorList.end(); i++) {
+		for (auto j = i; j != cursorList.end(); j++) {
+			ofxTuioCursor *blobi = (*i);
+			ofxTuioCursor *blobj = (*j);
 			ofVec2f begin = ofVec2f(blobi->getX()*ofGetWidth(), blobi->getY()*ofGetHeight());
 			ofVec2f end = ofVec2f(blobj->getX()*ofGetWidth(), blobj->getY()*ofGetHeight());
 			float dist = begin.distance(end);
