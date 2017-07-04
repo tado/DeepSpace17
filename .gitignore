@@ -146,3 +146,9 @@ WallTestApp/config.make
 *.sln
 *.vcxproj
 *.filters
+*.user
+*.rc
+*.plist
+*.xcscheme
+*.plist
+*.xcscheme
