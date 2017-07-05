@@ -57,7 +57,7 @@ void ofApp::update(){
         }
         else if(m.getAddress() == "/floor/objectLoc"){
             for(int i = 0; i < m.getNumArgs(); i+=2){
-                ofVec2f loc = ofVec2f(m.getArgAsInt32(i), m.getArgAsInt32(i+1));
+                ofVec2f loc = ofVec2f(m.getArgAsFloat(i), m.getArgAsFloat(i+1));
                 objectLoc.push_back(loc);
             }
         }
@@ -120,10 +120,10 @@ void ofApp::draw(){
     ofDrawBitmapStringHighlight("Object num = " + ofToString(objectNum), 40, 60);
     
     //draw objects
-    ofSetColor(0, 255, 255);
-    int size = ofGetWidth()/150;
+	ofSetColor(0);
+    int size = ofGetWidth()/80;
     for (int i = 0; i < objectLoc.size(); i++) {
-        ofDrawCircle(objectLoc[i], size);
+        ofDrawCircle(objectLoc[i].x * ofGetWidth(), objectLoc[i].y * ofGetHeight(), size);
     }
 }
 

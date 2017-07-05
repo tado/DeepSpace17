@@ -2,7 +2,8 @@
 
 void ofApp::setup() {
     //OSC to wall
-    sender.setup("192.168.19.190", 20000);
+	sender.setup("192.168.19.190", 20000);
+	//sender.setup("127.0.0.1", 20000);
 
     //TUIO
 	ofAddListener(tuio.objectAdded, this, &ofApp::objectAdded);
@@ -43,8 +44,8 @@ void ofApp::draw() {
     for (auto it = cursorList.begin(); it != cursorList.end(); it++) {
 		ofxTuioCursor *blob = (*it);
         ofDrawCircle(blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight(), circleSize);
-        ml.addIntArg(blob->getX()*ofGetWidth());
-        ml.addIntArg(blob->getY()*ofGetWidth());
+        ml.addFloatArg(blob->getX());
+        ml.addFloatArg(blob->getY());
     }
     sender.sendMessage(ml, false);
 
