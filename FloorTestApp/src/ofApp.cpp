@@ -2,8 +2,8 @@
 
 void ofApp::setup() {
     //OSC to wall
-	sender.setup("192.168.19.190", 20000);
-	//sender.setup("127.0.0.1", 20000);
+	//sender.setup("192.168.19.190", 20000);
+	sender.setup("127.0.0.1", 20000);
 
     //TUIO
 	ofAddListener(tuio.objectAdded, this, &ofApp::objectAdded);
