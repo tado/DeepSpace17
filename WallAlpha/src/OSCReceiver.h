@@ -2,6 +2,13 @@
 #include "ofMain.h"
 #include "ofxOsc.h"
 
+class NodeObject {
+public:
+	int id;
+	ofVec2f position;
+	string shaderName;
+};
+
 class OSCReceiver {
 public:
 	OSCReceiver();
@@ -10,7 +17,7 @@ public:
 
 	ofxOscReceiver receiver;
 	int objectNum;
-	vector<ofVec2f> objectLoc;
-	vector<int> objectId;
+	vector<NodeObject> nodes;
+	//vector<int> nodeIds;
 };
 
