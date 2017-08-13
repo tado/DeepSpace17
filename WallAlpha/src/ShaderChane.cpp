@@ -16,11 +16,15 @@ void ShaderChane::update() {
 }
 
 void ShaderChane::draw() {
+	ofApp *app = ((ofApp*)ofGetAppPtr());
 	ofEnableBlendMode(OF_BLENDMODE_ADD);
-	for (int i = 0; i < shaders.size(); i++) {
+	for (int i = 0; i < app->oscReceiver->objectNum; i++) {
 		shaders[i].begin();
 		shaders[i].setUniform1f("time", ofGetElapsedTimef());
 		shaders[i].setUniform2f("resolution", ofGetWidth(), ofGetHeight());
+		ofVec2f pos;
+		pos = app->oscReceiver->objectLoc[i];
+		shaders[i].setUniform2f("mouse", pos.x, pos.y);
 		ofRect(0, 0, ofGetWidth(), ofGetHeight());
 		shaders[i].end();
 	}

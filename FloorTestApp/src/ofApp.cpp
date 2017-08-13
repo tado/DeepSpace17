@@ -46,6 +46,7 @@ void ofApp::draw() {
         ofDrawCircle(blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight(), circleSize);
         ml.addFloatArg(blob->getX());
         ml.addFloatArg(blob->getY());
+		ml.addInt32Arg(blob->getFingerId());
     }
     sender.sendMessage(ml, false);
 

@@ -11,5 +11,6 @@ public:
 	ofxOscReceiver receiver;
 	int objectNum;
 	vector<ofVec2f> objectLoc;
+	vector<int> objectId;
 };
 

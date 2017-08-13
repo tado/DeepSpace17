@@ -11,12 +11,12 @@ void ofApp::setup() {
 
 void ofApp::update() {
 	oscReceiver->update();
-	shaders->update();
+	//shaders->update();
 }
 
 void ofApp::draw() {
 	oscReceiver->draw();
-	shaders->draw();
+	//shaders->draw();
 }
 
 void ofApp::keyPressed(int key) {
