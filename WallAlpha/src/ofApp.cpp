@@ -15,8 +15,8 @@ void ofApp::update() {
 }
 
 void ofApp::draw() {
-	//oscReceiver->draw();
 	shaders->draw();
+	//oscReceiver->draw();
 }
 
 void ofApp::keyPressed(int key) {

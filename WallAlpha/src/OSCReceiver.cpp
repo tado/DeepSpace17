@@ -1,4 +1,5 @@
 #include "OSCReceiver.h"
+#include "ofApp.h"
 
 OSCReceiver::OSCReceiver() {
 	receiver.setup(20000);
@@ -6,6 +7,7 @@ OSCReceiver::OSCReceiver() {
 }
 
 void OSCReceiver::update() {
+	ofApp *app = ((ofApp*)ofGetAppPtr());
 	//receiver OSC messages
 	while (receiver.hasWaitingMessages()) {
 		//nodes.clear();
@@ -18,6 +20,7 @@ void OSCReceiver::update() {
 			NodeObject n;
 			n.id = m.getArgAsInt(0);
 			nodes.push_back(n);
+			app->shaders->addShader(m.getArgAsInt(0));
 		}
 		else if (m.getAddress() == "/floor/objectRemoved" || m.getAddress() == "/floor/tuioRemoved") {
 			for (int i = 0; i < nodes.size(); i++) {
@@ -25,6 +28,7 @@ void OSCReceiver::update() {
 					nodes.erase(nodes.begin() + i);
 				}
 			}
+			app->shaders->removeShader(m.getArgAsInt(0));
 		}
 		else if (m.getAddress() == "/floor/objectUpdated" || m.getAddress() == "/floor/tuioUpdated") {
 			for (int i = 0; i < nodes.size(); i++) {

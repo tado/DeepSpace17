@@ -6,28 +6,36 @@ ShaderChane::ShaderChane(){
 }
 
 void ShaderChane::update() {
-	ofApp *app = ((ofApp*)ofGetAppPtr());
-	shaders.clear();
-	for (int i = 0; i < app->oscReceiver->objectNum; i++) {
-		ofShader sd; 
-		sd.load("", "circle.frag");
-		shaders.push_back(sd);
-	}
+
 }
 
 void ShaderChane::draw() {
 	ofApp *app = ((ofApp*)ofGetAppPtr());
 	ofEnableBlendMode(OF_BLENDMODE_ADD);
-	for (int i = 0; i < app->oscReceiver->objectNum; i++) {
-		shaders[i].begin();
-		shaders[i].setUniform1f("time", ofGetElapsedTimef());
-		shaders[i].setUniform2f("resolution", ofGetWidth(), ofGetHeight());
+	for (int i = 0; i < shaders.size(); i++) {
+		shaders[i].shader.begin();
+		shaders[i].shader.setUniform1f("time", ofGetElapsedTimef());
+		shaders[i].shader.setUniform2f("resolution", ofGetWidth(), ofGetHeight());
 		ofVec2f pos;
 		pos = app->oscReceiver->nodes[i].position;
-		shaders[i].setUniform2f("mouse", pos.x, ofMap(pos.y, 0, 1, 1, 0));
+		shaders[i].shader.setUniform2f("mouse", pos.x, ofMap(pos.y, 0, 1, 1, 0));
 		ofRect(0, 0, ofGetWidth(), ofGetHeight());
-		shaders[i].end();
+		shaders[i].shader.end();
 	}
 }
 
+void ShaderChane::addShader(int id) {
+	ShaderObject so;
+	so.shader.load("", "circle.frag");
+	so.id = id;
+	shaders.push_back(so);
+}
 
+
+void ShaderChane::removeShader(int id) {
+	for (int i = 0; i < shaders.size(); i++){
+		if (shaders[i].id == id){
+			shaders.erase(shaders.begin() + i);
+		}
+	}
+}
