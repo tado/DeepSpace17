@@ -39,28 +39,7 @@ void ofApp::draw() {
     mn.setAddress("/floor/objectNum");
     mn.addIntArg(cursorList.size() + objectList.size());
     sender.sendMessage(mn, false);
-	/*
-    ofxOscMessage ml;
-    ml.setAddress("/floor/objectLoc");
-    for (auto it = cursorList.begin(); it != cursorList.end(); it++) {
-		ofxTuioCursor *blob = (*it);
-        ofDrawCircle(blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight(), circleSize);
-		ofDrawBitmapString(ofToString(blob->getFingerId()), blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight());
-        ml.addFloatArg(blob->getX());
-        ml.addFloatArg(blob->getY());
-		ml.addInt32Arg(blob->getFingerId());
-    }
-	for (auto it = objectList.begin(); it != objectList.end(); it++) {
-		ofxTuioObject *blob = (*it);
-		ofDrawCircle(blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight(), circleSize);
-		ofDrawBitmapString(ofToString(blob->getFiducialId()+128), blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight());
-		ml.addFloatArg(blob->getX());
-		ml.addFloatArg(blob->getY());
-		ml.addInt32Arg(blob->getFiducialId() + 128);
-	}
-	sender.sendMessage(ml, false);
-	*/
-
+	
 	//draw circle  
 	for (auto it = cursorList.begin(); it != cursorList.end(); it++) {
 		ofxTuioCursor *blob = (*it);
