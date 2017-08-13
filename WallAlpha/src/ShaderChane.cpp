@@ -24,7 +24,7 @@ void ShaderChane::draw() {
 		shaders[i].setUniform2f("resolution", ofGetWidth(), ofGetHeight());
 		ofVec2f pos;
 		pos = app->oscReceiver->nodes[i].position;
-		shaders[i].setUniform2f("mouse", pos.x, pos.y);
+		shaders[i].setUniform2f("mouse", pos.x, ofMap(pos.y, 0, 1, 1, 0));
 		ofRect(0, 0, ofGetWidth(), ofGetHeight());
 		shaders[i].end();
 	}

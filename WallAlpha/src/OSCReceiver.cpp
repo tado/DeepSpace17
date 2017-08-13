@@ -34,12 +34,13 @@ void OSCReceiver::update() {
 			}
 		}
 	}
-
+	/*
 	cout << "Object ID = ";
 	for (int i = 0; i < nodes.size(); i++) {
 		cout << nodes[i].id << ", ";
 	}
 	cout << endl;
+	*/
 	//cout << "Object Num = " << objectNum << endl;
 }
 
