@@ -16,5 +16,6 @@ public:
 	void removeShader(int id);
 
 	vector<ShaderObject> shaders;
+	vector<string> shaderNames;
 };
 

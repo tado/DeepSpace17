@@ -2,7 +2,8 @@
 #include "ofApp.h"
 
 ShaderChane::ShaderChane(){
-
+	shaderNames.push_back("circle.frag");
+	shaderNames.push_back("stripe.frag");
 }
 
 void ShaderChane::update() {
@@ -26,7 +27,7 @@ void ShaderChane::draw() {
 
 void ShaderChane::addShader(int id) {
 	ShaderObject so;
-	so.shader.load("", "circle.frag");
+	so.shader.load("", shaderNames[id % shaderNames.size()]);
 	so.id = id;
 	shaders.push_back(so);
 }
