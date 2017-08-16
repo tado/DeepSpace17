@@ -16,6 +16,7 @@ void ShaderChane::draw() {
 	for (int i = 0; i < shaders.size(); i++) {
 		shaders[i].shader.begin();
 		shaders[i].shader.setUniform1f("time", ofGetElapsedTimef());
+		shaders[i].shader.setUniform1f("num", shaders.size());
 		shaders[i].shader.setUniform2f("resolution", ofGetWidth(), ofGetHeight());
 		ofVec2f pos;
 		pos = app->oscReceiver->nodes[i].position;
