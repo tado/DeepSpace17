@@ -1,9 +1,6 @@
 #pragma once
 
 #include "ofMain.h"
-#include "OSCReceiver.h"
-#include "ShaderChane.h"
-#include "PostProcess.h"
 #include "ofxSCSynthServer.h"
 #include "ofxSuperCollider.h"
 
@@ -13,6 +10,7 @@ public:
 	void setup();
 	void update();
 	void draw();
+	void exit();
 
 	void keyPressed(int key);
 	void keyReleased(int key);
@@ -26,9 +24,6 @@ public:
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
 
-	OSCReceiver *oscReceiver;
-	ShaderChane *shaders;
-	PostProcess *postProcess;
 	ofxSCSynthServer *server;
-	ofxSCSynth *col_fx;
+	int status; //0:wait for boot, 1:booted
 };

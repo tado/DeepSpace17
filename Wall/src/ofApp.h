@@ -1,11 +1,9 @@
 #pragma once
 
 #include "ofMain.h"
-#include "OSCReceiver.h"
-#include "ShaderChane.h"
-#include "PostProcess.h"
 #include "ofxSCSynthServer.h"
-#include "ofxSuperCollider.h"
+#include "OSCReceiver.h"
+#include "ObjectController.h"
 
 class ofApp : public ofBaseApp {
 
@@ -13,6 +11,7 @@ public:
 	void setup();
 	void update();
 	void draw();
+	void exit();
 
 	void keyPressed(int key);
 	void keyReleased(int key);
@@ -27,8 +26,6 @@ public:
 	void gotMessage(ofMessage msg);
 
 	OSCReceiver *oscReceiver;
-	ShaderChane *shaders;
-	PostProcess *postProcess;
 	ofxSCSynthServer *server;
-	ofxSCSynth *col_fx;
+	ObjectController *objectController;
 };

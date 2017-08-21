@@ -4,6 +4,15 @@ void ofApp::setup() {
 	ofBackground(0);
 	ofSetFrameRate(60);
 
+	//boot sc server
+	server = new ofxSCSynthServer();
+	server->boot();
+	server->loadSynthDefsDir();
+
+	//start FX
+	col_fx = new ofxSCSynth("col_closefx");
+	col_fx->create(0, 0);
+	
 	oscReceiver = new OSCReceiver();
 	shaders = new ShaderChane();
 	postProcess = new PostProcess();

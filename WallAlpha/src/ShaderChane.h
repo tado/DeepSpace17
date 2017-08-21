@@ -1,5 +1,6 @@
 #pragma once
 #include "ofMain.h"
+#include "ofxSuperCollider.h"
 
 class ShaderObject {
 public:
@@ -17,5 +18,6 @@ public:
 
 	vector<ShaderObject> shaders;
 	vector<string> shaderNames;
+	vector<ofxSCSynth *> col_saws;
 };
 

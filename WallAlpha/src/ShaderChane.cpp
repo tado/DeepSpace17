@@ -31,12 +31,21 @@ void ShaderChane::addShader(int id) {
 	so.shader.load("", shaderNames[id % shaderNames.size()]);
 	so.id = id;
 	shaders.push_back(so);
+	
+	ofxSCSynth *synth = new ofxSCSynth("col_closesaw");
+	synth->set("gate", 1);
+	synth->set("amp", 0.75);
+	synth->set("rq", 1.0);
+	synth->set("n", float(col_saws.size() + 1));
+	synth->set("detune", 0.1);
+	synth->create();
+	col_saws.push_back(synth);
 }
 
 
 void ShaderChane::removeShader(int id) {
-	for (int i = 0; i < shaders.size(); i++){
-		if (shaders[i].id == id){
+	for (int i = 0; i < shaders.size(); i++) {
+		if (shaders[i].id == id) {
 			shaders.erase(shaders.begin() + i);
 		}
 	}
