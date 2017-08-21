@@ -18,7 +18,7 @@ SynthDef("reso", {
 SynthDef("reverb", {
 	arg outbus, mix = 0.25, room = 2.0, damp = 0.5, amp = 1.0;
     var signal;
-	signal = Limitter.ar(In.ar(0, 2), 1.0);
+	signal = Limiter.ar(In.ar(0, 2), 1.0);
     ReplaceOut.ar(0, FreeVerb2.ar(signal[0], signal[1], mix, room, damp, amp));
 }).store;
 )
