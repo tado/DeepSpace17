@@ -13,6 +13,7 @@ public:
 	~ObjectController();
 
 	vector<UgenObject *> ugenObjects;
-	vector<FXObject *> fxObjects;
+	FXObject fxObject;
+	ofFbo fbo;
 };
 

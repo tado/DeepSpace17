@@ -22,24 +22,24 @@ void ofApp::setup(){
 	simplex.mul.set(10.0, 10.0, 10.0);
 	simplex.speed.set(0.3, 0.4, 0.5);
 
-    //Postprocessing
-    post.init(ofGetWidth()/scale, ofGetHeight()/scale);
-    kaleido = post.createPass<KaleidoscopePass>();
-    noise = post.createPass<NoiseWarpPass>();
-    rgb = post.createPass<RGBShiftPass>();
-    edge = post.createPass<EdgePass>();
-    pixel = post.createPass<PixelatePass>();
-    darken = post.createPass<LimbDarkeningPass>();
-    contrast = post.createPass<ContrastPass>();
-    conv = post.createPass<ConvolutionPass>();
-    dof = post.createPass<DofPass>();
-    sss = post.createPass<FakeSSSPass>();
-    fxaa = post.createPass<FxaaPass>();
-    vtilt = post.createPass<VerticalTiltShifPass>();
-    htilt = post.createPass<HorizontalTiltShifPass>();
-    god = post.createPass<GodRaysPass>();
-    bleach = post.createPass<BleachBypassPass>();
-    toon = post.createPass<ToonPass>();
+	//Postprocessing
+	post.init(ofGetWidth() / scale, ofGetHeight() / scale);
+	kaleido = post.createPass<KaleidoscopePass>();
+	noise = post.createPass<NoiseWarpPass>();
+	rgb = post.createPass<RGBShiftPass>();
+	edge = post.createPass<EdgePass>();
+	pixel = post.createPass<PixelatePass>();
+	darken = post.createPass<LimbDarkeningPass>();
+	contrast = post.createPass<ContrastPass>();
+	conv = post.createPass<ConvolutionPass>();
+	dof = post.createPass<DofPass>();
+	sss = post.createPass<FakeSSSPass>();
+	fxaa = post.createPass<FxaaPass>();
+	vtilt = post.createPass<VerticalTiltShifPass>();
+	htilt = post.createPass<HorizontalTiltShifPass>();
+	god = post.createPass<GodRaysPass>();
+	bleach = post.createPass<BleachBypassPass>();
+	toon = post.createPass<ToonPass>();
     restPostProcess();
     
     ofHideCursor();
@@ -128,25 +128,25 @@ void ofApp::draw(){
 }
 
 
-void ofApp::restPostProcess(){
-    //bloom->setEnabled(false);
-    kaleido->setEnabled(false);
-    noise->setEnabled(false);
-    rgb->setEnabled(false);
-    edge->setEnabled(false);
-    pixel->setEnabled(false);
-    darken->setEnabled(false);
-    contrast->setEnabled(false);
-    conv->setEnabled(false);
-    dof->setEnabled(false);
-    sss->setEnabled(false);
-    fxaa->setEnabled(false);
-    vtilt->setEnabled(false);
-    htilt->setEnabled(false);
-    god->setEnabled(false);
-    bleach->setEnabled(false);
-    //lut->setEnabled(false);
-    toon->setEnabled(false);
+void ofApp::restPostProcess() {
+	//bloom->setEnabled(false);
+	kaleido->setEnabled(false);
+	noise->setEnabled(false);
+	rgb->setEnabled(false);
+	edge->setEnabled(false);
+	pixel->setEnabled(false);
+	darken->setEnabled(false);
+	contrast->setEnabled(false);
+	conv->setEnabled(false);
+	dof->setEnabled(false);
+	sss->setEnabled(false);
+	fxaa->setEnabled(false);
+	vtilt->setEnabled(false);
+	htilt->setEnabled(false);
+	god->setEnabled(false);
+	bleach->setEnabled(false);
+	//lut->setEnabled(false);
+	toon->setEnabled(false);
 }
 
 //--------------------------------------------------------------
