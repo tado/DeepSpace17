@@ -1,4 +1,5 @@
 #include "FXObject.h"
+#include "ofApp.h"
 
 FXObject::FXObject() {
 	scale = 1.0;
@@ -29,6 +30,11 @@ FXObject::FXObject() {
 }
 
 void FXObject::update() {
+	ofApp *app = ((ofApp*)ofGetAppPtr());
+	ofVec2f pos; pos = ofVec2f(app->mouseX, app->mouseY);
+	ofVec2f center; center = ofVec2f(ofGetWidth()/2, ofGetHeight()/2);
+	kaleido->setSegments(sin(ofGetElapsedTimef() / 10.0) * 10.0);
+	noise->setAmplitude(sin(ofGetElapsedTimef() / 10.0) * 0.1);
 
 }
 

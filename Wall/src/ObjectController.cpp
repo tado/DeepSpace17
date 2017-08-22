@@ -9,12 +9,14 @@ ObjectController::ObjectController() {
 }
 
 void ObjectController::update() {
+	fxObject.update();
 	for (int i = 0; i < ugenObjects.size(); i++) {
 		ugenObjects[i]->update();
 	}
 }
 
 void ObjectController::draw() {
+	fxObject.draw();
 	ofSetColor(255);
 	fbo.begin();
 	ofEnableBlendMode(OF_BLENDMODE_ADD);
@@ -35,7 +37,7 @@ void ObjectController::addObject(int id) {
 		fxObject.addObject(id);
 	} else {
 		UgenObject *o;
-		if (ugenObjects.size() % 2 == 0) {
+		if (int(ofRandom(2)) % 2 == 0) {
 			o = new UgenObject(id, "noise");
 		}
 		else {
