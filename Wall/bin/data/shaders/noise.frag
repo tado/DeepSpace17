@@ -1,9 +1,9 @@
-#version 150
+#version 120
 
 uniform vec2 resolution;
 uniform vec2 mouse;
 uniform float time;
-uniform float num;
+uniform float num = 1.0;
 //float phase = rand(1000.0);
 
 float rand(float n){
@@ -105,11 +105,12 @@ float snoise(vec3 v)
 void main() {
     vec2 st = gl_FragCoord.xy/resolution.x;
 
-    float freq =  0.1 + length(vec2(0.5, 0.5) - mouse) * 5.0;
-    vec2 pos = vec2(st * freq);
-    float br = 0.5 / num;
-    float speed = 0.8;
-    float gain = 2.0 + (length(vec2(0.5, 0.5) - mouse) * 20.0);
+    //float freq =  0.1 + length(vec2(0.5, 0.5) - mouse) * 5.0;
+    vec2 freq = vec2(0.1, 0.1) + vec2(0.5 - mouse.x, 0.5 - mouse.y) * 8.0;
+    vec2 pos = vec2(st) * freq;
+    float br = 0.75 / num;
+    float speed = 1.5;
+    float gain = 2.0 + (length(vec2(0.5, 0.5) - mouse) * 10.0);
 
     // Use the noise function
     float r = mod(snoise(vec3(pos.x, pos.y, time * speed + 10.0)) * gain, 2.0);

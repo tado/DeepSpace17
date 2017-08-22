@@ -13,6 +13,9 @@ void ofApp::setup(){
 	//boot sc server
 	server = new ofxSCSynthServer();
 	server->boot();
+
+	//window loc
+	ofSetWindowPosition(0, 0);
 }
 
 void ofApp::update(){
@@ -36,7 +39,9 @@ void ofApp::keyPressed(int key){
 
 
 void ofApp::keyReleased(int key){
-
+	if (key == 'f')	{
+		ofToggleFullscreen();
+	}
 }
 
 
