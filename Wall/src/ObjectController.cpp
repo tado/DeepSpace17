@@ -34,7 +34,13 @@ void ObjectController::addObject(int id) {
 	if (id % 2 == 0) {
 		fxObject.addObject(id);
 	} else {
-		UgenObject *o = new UgenObject(id, "circle");
+		UgenObject *o;
+		if (ugenObjects.size() % 2 == 0) {
+			o = new UgenObject(id, "noise");
+		}
+		else {
+			o = new UgenObject(id, "circle");
+		}
 		ugenObjects.push_back(o);
 	}
 }

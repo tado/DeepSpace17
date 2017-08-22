@@ -19,7 +19,7 @@ void UgenObject::draw() {
 	for (int i = 0; i < app->oscReceiver->nodes.size(); i++) {
 		if (id == app->oscReceiver->nodes[i].id) {
 			pos = app->oscReceiver->nodes[i].position;
-			shader.setUniform2f("mouse", pos.x, ofMap(pos.y, 0, 1, 1, 0));
+			shader.setUniform2f("mouse", pos.x, pos.y);
 		}
 	}
 	int num = app->objectController->ugenObjects.size();
