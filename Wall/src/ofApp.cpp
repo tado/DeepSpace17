@@ -15,7 +15,7 @@ void ofApp::setup(){
 	server->boot();
 
 	//window loc
-	ofSetWindowPosition(0, 0);
+	ofSetWindowPosition(0, 20);
 }
 
 void ofApp::update(){

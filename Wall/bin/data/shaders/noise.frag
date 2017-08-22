@@ -105,17 +105,16 @@ float snoise(vec3 v)
 void main() {
     vec2 st = gl_FragCoord.xy/resolution.x;
 
-    //float freq =  0.1 + length(vec2(0.5, 0.5) - mouse) * 5.0;
-    vec2 freq = vec2(0.1, 0.1) + vec2(0.5 - mouse.x, 0.5 - mouse.y) * 8.0;
+    float freq =  0.01 + length(vec2(0.5, 0.5) - mouse) * 3.0;
+    //vec2 freq = vec2(0.1, 0.1) + vec2(0.5 - mouse.x, 0.5 - mouse.y) * 8.0;
     vec2 pos = vec2(st) * freq;
     float br = 0.75 / num;
     float speed = 1.5;
-    float gain = 2.0 + (length(vec2(0.5, 0.5) - mouse) * 10.0);
+    float gain = 20.1 - (length(vec2(0.5, 0.5) - mouse) * 20.0);
 
-    // Use the noise function
-    float r = mod(snoise(vec3(pos.x, pos.y, time * speed + 10.0)) * gain, 2.0);
-    float g = mod(snoise(vec3(pos.x, pos.y, time * speed + 20.0)) * gain, 2.0);
-    float b = mod(snoise(vec3(pos.x, pos.y, time * speed + 30.0)) * gain, 2.0);
+    float r = mod(snoise(vec3(pos.x, pos.y, time * speed + 10.0 + num)) * gain, 2.0);
+    float g = mod(snoise(vec3(pos.x, pos.y, time * speed + 11.0 + num)) * gain, 2.0);
+    float b = mod(snoise(vec3(pos.x, pos.y, time * speed + 12.0 + num)) * gain, 2.0);
 
     gl_FragColor = vec4(vec3(r * br, g * br, b * br), 1.0);
 }
