@@ -6,6 +6,7 @@ UgenObject::UgenObject(int id) {
 
 	this->id = id;
 	int num = app->objectController->ugenObjects.size();
+	initTime = ofGetElapsedTimef();
 
 	switch (id % 2){
 	case 0:
@@ -30,7 +31,7 @@ void UgenObject::update() {
 void UgenObject::draw() {
 	ofApp *app = ((ofApp*)ofGetAppPtr());
 	shader.begin();
-	shader.setUniform1f("time", ofGetElapsedTimef());
+	shader.setUniform1f("time", ofGetElapsedTimef() - initTime);
 	shader.setUniform2f("resolution", ofGetWidth(), ofGetHeight());
 	shader.setUniform2f("mouse", pos.x, pos.y);
 	int num = app->objectController->ugenObjects.size();

@@ -12,5 +12,6 @@ public:
 	int id;
 	int type; //0 = circle, 1 = noise
 	ofVec2f pos;
+	float initTime;
 };
 
