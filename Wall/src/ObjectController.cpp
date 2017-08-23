@@ -29,7 +29,7 @@ void ObjectController::update() {
 			}
 		}
 	}
-	if (min < 0.1) {
+	if (min < 0.2) {
 		postProcess.addFx(minType);
 	}
 	else {

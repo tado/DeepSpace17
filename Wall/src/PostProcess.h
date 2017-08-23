@@ -9,7 +9,6 @@ public:
 	void draw();
 	void resetPostProcess();
 	void addFx(int num);
-	void removeFx(int num);
 	~PostProcess();
 
 	//postprocess
@@ -22,10 +21,6 @@ public:
 	ToonPass::Ptr toon;
 	ConvolutionPass::Ptr conv;
 	ContrastPass::Ptr contrast;
-
-	float scale;
-
-	/*
 	EdgePass::Ptr edge;
 	DofPass::Ptr dof;
 	FakeSSSPass::Ptr sss;
@@ -34,8 +29,8 @@ public:
 	HorizontalTiltShifPass::Ptr htilt;
 	GodRaysPass::Ptr god;
 	BleachBypassPass::Ptr bleach;
-    */
 	//LUTPass::Ptr lut;
 
+	float scale;
 };
 

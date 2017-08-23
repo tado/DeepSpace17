@@ -2,8 +2,10 @@
 #include "ofApp.h"
 
 FxObject::FxObject(int id) {
+	ofApp *app = ((ofApp*)ofGetAppPtr());
+
 	this->id = id;
-	this->type = int(ofRandom(8));
+	this->type = app->objectController->fxObjects.size() % 7;
 }
 
 void FxObject::update() {
