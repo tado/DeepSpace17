@@ -13,6 +13,28 @@ void ObjectController::update() {
 	for (int i = 0; i < ugenObjects.size(); i++) {
 		ugenObjects[i]->update();
 	}
+	for (int i = 0; i < fxObjects.size(); i++) {
+		fxObjects[i]->update();
+	}
+
+	//select postprocess
+	float min = FLT_MAX;
+	int minType;
+	for (int i = 0; i < fxObjects.size(); i++) {
+		for (int j = 0; j < ugenObjects.size(); j++) {
+			float length = ugenObjects[j]->pos.distance(fxObjects[i]->pos);
+			if (length < min) {
+				min = length;
+				minType = fxObjects[i]->type;
+			}
+		}
+	}
+	if (min < 0.1) {
+		postProcess.addFx(minType);
+	}
+	else {
+		postProcess.resetPostProcess();
+	}
 }
 
 void ObjectController::draw() {
@@ -32,25 +54,28 @@ void ObjectController::draw() {
 }
 
 void ObjectController::addObject(int id) {
-	if (id % 2 == 0) {
-		postProcess.addObject(id);
-	} else {
+	if (ugenObjects.size() < 4) {
 		UgenObject *o = new UgenObject(id);
 		ugenObjects.push_back(o);
+	} else {
+		FxObject *o = new FxObject(id);
+		fxObjects.push_back(o);
+		//postProcess.addObject(id);
 	}
 }
 
 void ObjectController::removeObject(int id) {
-	if (id % 2 == 0){
-		postProcess.removeObject(id);
-	} else {
-		for (int i = 0; i < ugenObjects.size(); i++) {
-			if (ugenObjects[i]->id == id) {
-				ugenObjects.erase(ugenObjects.begin() + i);
-			}
+	for (int i = 0; i < ugenObjects.size(); i++) {
+		if (ugenObjects[i]->id == id) {
+			ugenObjects.erase(ugenObjects.begin() + i);
+		}
+	}
+	for (int i = 0; i < fxObjects.size(); i++) {
+		if (fxObjects[i]->id == id) {
+			fxObjects.erase(fxObjects.begin() + i);
 		}
 	}
 }
 
-ObjectController::~ObjectController(){
+ObjectController::~ObjectController() {
 }

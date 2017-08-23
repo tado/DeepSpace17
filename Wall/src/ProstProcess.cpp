@@ -30,11 +30,7 @@ PostProcess::PostProcess() {
 }
 
 void PostProcess::update() {
-	ofApp *app = ((ofApp*)ofGetAppPtr());
-	ofVec2f pos; pos = ofVec2f(app->mouseX, app->mouseY);
-	ofVec2f center; center = ofVec2f(ofGetWidth()/2, ofGetHeight()/2);
-	kaleido->setSegments(sin(ofGetElapsedTimef() / 10.0) * 10.0);
-	noise->setAmplitude(sin(ofGetElapsedTimef() / 10.0) * 0.1);
+
 }
 
 void PostProcess::draw() {
@@ -64,8 +60,8 @@ void PostProcess::resetPostProcess() {
 	*/
 }
 
-void PostProcess::addObject(int id) {
-	int n = (id / 2) % 8;
+void PostProcess::addFx(int num) {
+	int n = num;
 	switch (n) {
 	case 0:
 		kaleido->setEnabled(true);
@@ -94,8 +90,8 @@ void PostProcess::addObject(int id) {
 	}
 }
 
-void PostProcess::removeObject(int id) {
-	int n = (id / 2) % 8;
+void PostProcess::removeFx(int num) {
+	int n = (num / 2) % 8;
 	switch (n) {
 	case 0:
 		kaleido->setEnabled(false);

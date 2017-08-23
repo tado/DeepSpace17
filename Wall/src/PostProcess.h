@@ -8,8 +8,8 @@ public:
 	void update();
 	void draw();
 	void resetPostProcess();
-	void addObject(int id);
-	void removeObject(int id);
+	void addFx(int num);
+	void removeFx(int num);
 	~PostProcess();
 
 	//postprocess
