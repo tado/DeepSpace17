@@ -2,16 +2,15 @@
 #include "ofMain.h"
 #include "ofxPostProcessing.h"
 
-class FXObject
-{
+class PostProcess{
 public:
-	FXObject();
+	PostProcess();
 	void update();
 	void draw();
 	void resetPostProcess();
 	void addObject(int id);
 	void removeObject(int id);
-	~FXObject();
+	~PostProcess();
 
 	//postprocess
 	ofxPostProcessing post;

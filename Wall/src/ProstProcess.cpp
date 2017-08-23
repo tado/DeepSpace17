@@ -1,7 +1,7 @@
-#include "FXObject.h"
+#include "PostProcess.h"
 #include "ofApp.h"
 
-FXObject::FXObject() {
+PostProcess::PostProcess() {
 	scale = 1.0;
 
 	//Postprocessing
@@ -29,20 +29,19 @@ FXObject::FXObject() {
 	*/
 }
 
-void FXObject::update() {
+void PostProcess::update() {
 	ofApp *app = ((ofApp*)ofGetAppPtr());
 	ofVec2f pos; pos = ofVec2f(app->mouseX, app->mouseY);
 	ofVec2f center; center = ofVec2f(ofGetWidth()/2, ofGetHeight()/2);
 	kaleido->setSegments(sin(ofGetElapsedTimef() / 10.0) * 10.0);
 	noise->setAmplitude(sin(ofGetElapsedTimef() / 10.0) * 0.1);
+}
+
+void PostProcess::draw() {
 
 }
 
-void FXObject::draw() {
-
-}
-
-void FXObject::resetPostProcess() {
+void PostProcess::resetPostProcess() {
 	kaleido->setEnabled(false);
 	noise->setEnabled(false);
 	rgb->setEnabled(false);
@@ -65,7 +64,7 @@ void FXObject::resetPostProcess() {
 	*/
 }
 
-void FXObject::addObject(int id) {
+void PostProcess::addObject(int id) {
 	int n = (id / 2) % 8;
 	switch (n) {
 	case 0:
@@ -95,7 +94,7 @@ void FXObject::addObject(int id) {
 	}
 }
 
-void FXObject::removeObject(int id) {
+void PostProcess::removeObject(int id) {
 	int n = (id / 2) % 8;
 	switch (n) {
 	case 0:
@@ -125,5 +124,5 @@ void FXObject::removeObject(int id) {
 	}
 }
 
-FXObject::~FXObject() {
+PostProcess::~PostProcess() {
 }

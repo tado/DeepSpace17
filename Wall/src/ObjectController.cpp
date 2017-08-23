@@ -9,14 +9,13 @@ ObjectController::ObjectController() {
 }
 
 void ObjectController::update() {
-	fxObject.update();
+	postProcess.update();
 	for (int i = 0; i < ugenObjects.size(); i++) {
 		ugenObjects[i]->update();
 	}
 }
 
 void ObjectController::draw() {
-	fxObject.draw();
 	ofSetColor(255);
 	fbo.begin();
 	ofEnableBlendMode(OF_BLENDMODE_ADD);
@@ -27,29 +26,23 @@ void ObjectController::draw() {
 	fbo.end();
 
 	ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-	fxObject.post.begin();
+	postProcess.post.begin();
 	fbo.draw(0, 0);
-	fxObject.post.end();
+	postProcess.post.end();
 }
 
 void ObjectController::addObject(int id) {
 	if (id % 2 == 0) {
-		fxObject.addObject(id);
+		postProcess.addObject(id);
 	} else {
-		UgenObject *o;
-		if (int(ofRandom(2)) % 2 == 0) {
-			o = new UgenObject(id, "noise");
-		}
-		else {
-			o = new UgenObject(id, "circle");
-		}
+		UgenObject *o = new UgenObject(id);
 		ugenObjects.push_back(o);
 	}
 }
 
 void ObjectController::removeObject(int id) {
 	if (id % 2 == 0){
-		fxObject.removeObject(id);
+		postProcess.removeObject(id);
 	} else {
 		for (int i = 0; i < ugenObjects.size(); i++) {
 			if (ugenObjects[i]->id == id) {

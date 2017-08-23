@@ -1,7 +1,7 @@
 #pragma once
 #include "ofMain.h"
 #include "UgenObject.h"
-#include "FXObject.h"
+#include "PostProcess.h"
 
 class ObjectController{
 public:
@@ -13,7 +13,7 @@ public:
 	~ObjectController();
 
 	vector<UgenObject *> ugenObjects;
-	FXObject fxObject;
+	PostProcess postProcess;
 	ofFbo fbo;
 };
 

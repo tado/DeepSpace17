@@ -1,9 +1,18 @@
 #include "UgenObject.h"
 #include "ofApp.h"
 
-UgenObject::UgenObject(int id, string name) {
-	shader.load("", "shaders/" + name + ".frag");
+UgenObject::UgenObject(int id) {
 	this->id = id;
+	type = int(ofRandom(2));
+	switch (type){
+	case 0:
+		shader.load("shaders/circle");
+		break;
+	case 1:
+	default:
+		shader.load("shaders/noise");
+		break;
+	}
 }
 
 void UgenObject::update() {

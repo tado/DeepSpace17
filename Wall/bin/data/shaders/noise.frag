@@ -108,7 +108,7 @@ void main() {
     float freq =  0.01 + length(vec2(0.5, 0.5) - mouse) * 3.0;
     //vec2 freq = vec2(0.1, 0.1) + vec2(0.5 - mouse.x, 0.5 - mouse.y) * 8.0;
     vec2 pos = vec2(st) * freq;
-    float br = 0.75 / num;
+    float br = 0.8 / num;
     float speed = 1.5;
     float gain = 20.1 - (length(vec2(0.5, 0.5) - mouse) * 20.0);
 
