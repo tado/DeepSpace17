@@ -15,6 +15,7 @@ void FxObject::update() {
 			pos = app->oscReceiver->nodes[i].position;
 		}
 	}
+	app->objectController->postProcess.updateFx(type, pos);
 }
 
 FxObject::~FxObject(){
