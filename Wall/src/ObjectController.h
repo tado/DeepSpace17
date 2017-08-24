@@ -21,5 +21,7 @@ public:
 	float thresh;
 	ofxSCSynth *reverb;
 	int ugenMax;
+	int noiseNum;
+	int circleNum;
 };
 

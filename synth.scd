@@ -10,6 +10,7 @@ SynthDef("moog", {
 	arg base = 40, freq = 100, gain = 1.0, mul = 0.5, detune=1.01;
 	var out;
 	out = MoogFF.ar(Pulse.ar([base, base*3.03], [0.3, 0.7]), freq, gain);
+	8.do({ out = AllpassL.ar(out, 0.1, LFNoise2.kr([rrand(0.0, 0.01),rrand(0.0, 0.01)],0.01,0.06), 2.0) });
 	Out.ar(0, out);
 }).store;
 
@@ -22,7 +23,7 @@ SynthDef("reso", {
 }).store;
 
 SynthDef("reverb", {
-	arg outbus, mix = 0.25, room = 2.0, damp = 0.5, amp = 1.0;
+	arg outbus, mix = 0.4, room = 4.0, damp = 0.5, amp = 1.0;
     var signal;
 	signal = Limiter.ar(In.ar(0, 2), 1.0);
     ReplaceOut.ar(0, FreeVerb2.ar(signal[0], signal[1], mix, room, damp, amp));
