@@ -110,7 +110,7 @@ void main() {
     vec2 pos = vec2(st) * freq;
     float br = 0.7 / num;
     float speed = 1.75;
-    float gain = 20.1 - (length(vec2(0.5, 0.5) - mouse) * 20.0);
+    float gain = 5.1 - (length(vec2(0.5, 0.5) - mouse) * 5.0);
 
     float r = mod(snoise(vec3(pos.x, pos.y, time * speed + 0.0)) * gain, 2.0);
     float g = mod(snoise(vec3(pos.x, pos.y, time * speed + 1.0)) * gain, 2.0);

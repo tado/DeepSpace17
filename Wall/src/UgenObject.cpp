@@ -8,14 +8,13 @@ UgenObject::UgenObject(int id) {
 	int num = app->objectController->ugenObjects.size();
 	initTime = ofGetElapsedTimef();
 
-	switch (id % 2){
+	switch (num % 2){
 	case 0:
 		shader.load("shaders/noise");
-		synth = new ofxSCSynth("sine");
+		synth = new ofxSCSynth("moog");
 		synth->create(0, 0);
-		baseFreq = ofRandom(110, 220);
-		synth->set("freq", baseFreq);
-		synth->set("mul", 0.4);
+		synth->set("mul", 0.6);
+		synth->set("base", 40.0 * ofRandom(1.0, 1.01));
 		break;
 	case 1:
 	default:
@@ -24,7 +23,7 @@ UgenObject::UgenObject(int id) {
 		synth->create(0, 0);
 		baseFreq = ofRandom(2200, 4400);
 		synth->set("freq", baseFreq);
-		synth->set("mul", 0.1);
+		synth->set("mul", 0.001);
 		break;
 	}
 }
@@ -37,7 +36,18 @@ void UgenObject::update() {
 		}
 	}
 	float length = pos.distance(ofVec2f(0.5, 0.5));
-	synth->set("freq", baseFreq - (baseFreq * length * 0.2));
+	float lenX = abs(0.5 - pos.x);
+	float lenY = abs(0.5 - pos.y);
+	switch (id%2){
+	case 0:
+		synth->set("freq", ofMap(lenX, 0, 1, 600, 5));
+		synth->set("gain", ofMap(lenY, 0, 1, 4, 0));
+		break;
+	case 1:
+		synth->set("freq", baseFreq - (baseFreq * length * 0.2));
+		break;
+	}
+	
 }
 
 void UgenObject::draw() {

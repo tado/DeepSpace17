@@ -6,6 +6,13 @@ SynthDef("sine", {
 	Out.ar(0, out);
 }).store;
 
+SynthDef("moog", {
+	arg base = 40, freq = 100, gain = 1.0, mul = 0.5, detune=1.01;
+	var out;
+	out = MoogFF.ar(Pulse.ar([base, base*3.03], [0.3, 0.7]), freq, gain);
+	Out.ar(0, out);
+}).store;
+
 SynthDef("reso", {
 	arg freq = 440, density = 0.1;
     var a = Resonz.ar(Array.fill(64, {Dust.ar(density)}),
@@ -24,7 +31,7 @@ SynthDef("reverb", {
 
 a = Synth("reverb");
 
-e = Synth("reso", ["freq", 60]);
+e = Synth("moog");
 
 b = Synth("reso", ["freq", 80]);
 
@@ -33,3 +40,14 @@ c = Synth("reso", ["freq", 120]);
 d = Synth("reso", ["freq", 180]);
 
 a.free;
+
+(
+x = {
+	f = 40;
+    MoogFF.ar(
+        Pulse.ar([f, f*3.02], [0.3,0.7]),
+		        MouseY.kr(50, 20000, 1),
+		MouseX.kr(1.0, 3.5))}.play(s);
+)
+
+x.free;

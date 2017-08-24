@@ -8,7 +8,7 @@ ObjectController::ObjectController() {
 	fbo.end();
 
 	thresh = 0.3;
-	ugenMax = 4;
+	ugenMax = 8;
 
 	//Global reverb
 	reverb = new ofxSCSynth("reverb");
