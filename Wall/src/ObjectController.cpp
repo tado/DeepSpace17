@@ -13,8 +13,8 @@ ObjectController::ObjectController() {
 	circleNum = 0;
 
 	//Global reverb
-	reverb = new ofxSCSynth("reverb");
-	reverb->create(0, 0);
+	//reverb = new ofxSCSynth("reverb");
+	//reverb->create(0, 0);
 }
 
 void ObjectController::update() {

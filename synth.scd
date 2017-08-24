@@ -10,7 +10,9 @@ SynthDef("moog", {
 	arg base = 40, freq = 100, gain = 1.0, mul = 0.5, detune=1.01;
 	var out;
 	out = MoogFF.ar(Pulse.ar([base, base*3.03], [0.3, 0.7]), freq, gain);
-	8.do({ out = AllpassL.ar(out, 0.1, LFNoise2.kr([rrand(0.0, 0.01),rrand(0.0, 0.01)],0.01,0.06), 2.0) });
+	12.do({ out = AllpassL.ar(out, 0.1, LFNoise2.kr([rrand(0.0, 0.01),rrand(0.0, 0.01)],0.01,0.06), 0.5) });
+    //out = Limiter.ar(out, 0.8);
+	out = out.softclip();
 	Out.ar(0, out);
 }).store;
 

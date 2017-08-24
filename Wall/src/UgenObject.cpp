@@ -43,7 +43,7 @@ void UgenObject::update() {
 	float lenY = abs(0.5 - pos.y);
 	switch (type){
 	case 0:
-		synth->set("freq", ofMap(lenX, 0, 0.5, 2000, 1));
+		synth->set("freq", ofMap(lenX, 0, 0.5, 800, 0));
 		synth->set("gain", ofMap(lenY, 0, 0.5, 3.5, 0));
 		break;
 	case 1:
