@@ -78,7 +78,7 @@ void PostProcess::updateFx(int type, ofVec2f pos) {
 		pixel->resolution = ofVec2f((1.0 - pos.x) * 50.0, (1.0 - pos.y) * 50.0);
 		break;
 	case 3:
-		darken->setBrightness(length * 10.0);
+		darken->setBrightness(length*10.0);
 		break;
 	case 4:
 		toon->setLevel(length * 10.0);

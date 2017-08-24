@@ -26,22 +26,20 @@ bool ofxSCSynthServer::boot(string hostname, unsigned int port) {
     // start scsynth
     STARTUPINFOA si;
     GetStartupInfoA(&si);
-    
-	string strCmd = ".\\libs\\server\\win\\scsynth.exe -u " + ofToString(port);
+	string strCmd = ".\\libs\\server\\win\\scsynth.exe -D 0 -u " + ofToString(port);
 	LPSTR command = LPSTR(strCmd.c_str());
-    
 	bool bSucess = false;
 	if (!CreateProcessA(NULL, command, NULL, NULL, TRUE, NULL, NULL, NULL, &si, &pi)) {
 		cout << "Error: CreateProcess for boot scsynth" << endl;
 	} else {
-		WaitForSingleObject(pi.hProcess, 4000);
+		WaitForSingleObject(pi.hProcess, 2000);
 	}
-#endif
-    
 	//OSC setup
     sender.setup(hostname, port);
 	//load synthdefs
-	loadSynthDefsDir();
+	loadSynthDefsDir(".\\data\\synthdefs");
+	ofSleepMillis(2000);
+#endif
 
 	return true;
 }

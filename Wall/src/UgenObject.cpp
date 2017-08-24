@@ -11,10 +11,20 @@ UgenObject::UgenObject(int id) {
 	switch (id % 2){
 	case 0:
 		shader.load("shaders/noise");
+		synth = new ofxSCSynth("sine");
+		synth->create(0, 0);
+		baseFreq = ofRandom(110, 220);
+		synth->set("freq", baseFreq);
+		synth->set("mul", 0.4);
 		break;
 	case 1:
 	default:
 		shader.load("shaders/circle");
+		synth = new ofxSCSynth("sine");
+		synth->create(0, 0);
+		baseFreq = ofRandom(2200, 4400);
+		synth->set("freq", baseFreq);
+		synth->set("mul", 0.1);
 		break;
 	}
 }
@@ -26,6 +36,8 @@ void UgenObject::update() {
 			pos = app->oscReceiver->nodes[i].position;
 		}
 	}
+	float length = pos.distance(ofVec2f(0.5, 0.5));
+	synth->set("freq", baseFreq - (baseFreq * length * 0.2));
 }
 
 void UgenObject::draw() {
@@ -40,6 +52,6 @@ void UgenObject::draw() {
 	shader.end();
 }
 
-UgenObject::~UgenObject()
-{
+UgenObject::~UgenObject(){
+	synth->free();
 }

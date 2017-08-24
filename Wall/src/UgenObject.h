@@ -1,5 +1,6 @@
 #pragma once
 #include "ofMain.h"
+#include "ofxSuperCollider.h"
 
 class UgenObject {
 public:
@@ -13,5 +14,7 @@ public:
 	int type; //0 = circle, 1 = noise
 	ofVec2f pos;
 	float initTime;
+	ofxSCSynth *synth;
+	float baseFreq;
 };
 

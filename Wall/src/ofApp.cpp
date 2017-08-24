@@ -4,15 +4,15 @@ void ofApp::setup(){
 	ofBackground(0);
 	ofSetFrameRate(60);
 
+	//boot sc server
+	server = new ofxSCSynthServer();
+	server->boot();
+
 	//OSC Receiver
 	oscReceiver = new OSCReceiver();
 
 	//Object Controller
 	objectController = new ObjectController();
-
-	//boot sc server
-	server = new ofxSCSynthServer();
-	server->boot();
 
 	//window loc
 	ofSetWindowPosition(0, 40);

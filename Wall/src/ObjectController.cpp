@@ -6,6 +6,13 @@ ObjectController::ObjectController() {
 	fbo.begin();
 	ofClear(0, 0, 0);
 	fbo.end();
+
+	thresh = 0.3;
+	ugenMax = 4;
+
+	//Global reverb
+	reverb = new ofxSCSynth("reverb");
+	reverb->create(0, 0);
 }
 
 void ObjectController::update() {
@@ -29,7 +36,7 @@ void ObjectController::update() {
 			}
 		}
 	}
-	if (min < 0.2) {
+	if (min < thresh) {
 		postProcess.addFx(minType);
 	}
 	else {
@@ -54,7 +61,7 @@ void ObjectController::draw() {
 }
 
 void ObjectController::addObject(int id) {
-	if (ugenObjects.size() < 4) {
+	if (ugenObjects.size() < ugenMax) {
 		UgenObject *o = new UgenObject(id);
 		ugenObjects.push_back(o);
 	} else {
@@ -67,6 +74,7 @@ void ObjectController::addObject(int id) {
 void ObjectController::removeObject(int id) {
 	for (int i = 0; i < ugenObjects.size(); i++) {
 		if (ugenObjects[i]->id == id) {
+			delete ugenObjects[i];
 			ugenObjects.erase(ugenObjects.begin() + i);
 		}
 	}

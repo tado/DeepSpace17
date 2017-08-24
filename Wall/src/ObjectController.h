@@ -3,6 +3,7 @@
 #include "UgenObject.h"
 #include "FxObject.h"
 #include "PostProcess.h"
+#include "ofxSuperCollider.h"
 
 class ObjectController{
 public:
@@ -17,5 +18,8 @@ public:
 	vector<FxObject *> fxObjects;
 	PostProcess postProcess;
 	ofFbo fbo;
+	float thresh;
+	ofxSCSynth *reverb;
+	int ugenMax;
 };
 
