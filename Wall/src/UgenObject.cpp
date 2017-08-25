@@ -15,7 +15,7 @@ UgenObject::UgenObject(int id) {
 		shader.load("shaders/noise");
 		synth = new ofxSCSynth("moog");
 		synth->create(0, 0);
-		synth->set("mul", 0.6);
+		synth->set("mul", 1.0);
 		synth->set("base", 20.0 * powf(1.5, app->objectController->noiseNum));
 		break;
 	case 1:

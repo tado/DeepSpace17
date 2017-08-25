@@ -3,6 +3,10 @@
 
 PostProcess::PostProcess() {
 	scale = 1.0;
+	playSynth = false;
+
+	synth = new ofxSCSynth("comb");
+	synth->create(0, 0);
 
 	//Postprocessing
 	post.init(ofGetWidth() / scale, ofGetHeight() / scale);
@@ -75,7 +79,7 @@ void PostProcess::updateFx(int type, ofVec2f pos) {
 		noise->setAmplitude(length * 0.5);
 		break;
 	case 2:
-		pixel->resolution = ofVec2f((1.0 - pos.x) * 50.0, (1.0 - pos.y) * 50.0);
+		pixel->resolution = ofVec2f((1.0 - pos.x) * 40.0, (1.0 - pos.y) * 40.0);
 		break;
 	case 3:
 		darken->setBrightness(length*10.0);
@@ -98,6 +102,11 @@ void PostProcess::addFx(int num) {
 	switch (n) {
 	case 0:
 		kaleido->setEnabled(true);
+		if (!playSynth) {
+			synth->set("inamp", 1.0);
+			synth->set("delaytime", ofRandom(0.005, 0.05));
+			playSynth = true;
+		}
 		break;
 	case 1:
 		noise->setEnabled(true);

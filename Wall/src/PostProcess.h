@@ -1,6 +1,7 @@
 #pragma once
 #include "ofMain.h"
 #include "ofxPostProcessing.h"
+#include "ofxSuperCollider.h"
 
 class PostProcess{
 public:
@@ -33,5 +34,8 @@ public:
 	//LUTPass::Ptr lut;
 
 	float scale;
+
+	ofxSCSynth * synth;
+	bool playSynth;
 };
 

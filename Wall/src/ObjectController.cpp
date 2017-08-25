@@ -43,6 +43,10 @@ void ObjectController::update() {
 	}
 	else {
 		postProcess.resetPostProcess();
+		if (postProcess.playSynth) {
+			postProcess.synth->set("inamp", 0.0);
+			postProcess.playSynth = false;
+		}
 	}
 }
 
