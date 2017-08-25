@@ -7,14 +7,14 @@ ObjectController::ObjectController() {
 	ofClear(0, 0, 0);
 	fbo.end();
 
-	thresh = 0.3;
+	thresh = 0.1;
 	ugenMax = 4;
 	noiseNum = 0;
 	circleNum = 0;
 
 	//Global reverb
-	//reverb = new ofxSCSynth("reverb");
-	//reverb->create(0, 0);
+	reverb = new ofxSCSynth("reverb");
+	reverb->create(0, 0);
 }
 
 void ObjectController::update() {

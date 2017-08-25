@@ -1,8 +1,9 @@
 (
 SynthDef("sine", {
-	arg freq = 440, mul = 0.5, detune=1.01;
-	var out;
-	out = SinOsc.ar([freq, freq*detune], 0, mul);
+	arg freq = 440, mul = 0.5, detune=1.01, lfo=4.0;
+	var out, mod;
+	mod = SinOsc.ar(lfo, 0, 0.4, 0.5);
+	out = SinOsc.ar([freq, freq*detune], 0, mul * mod);
 	Out.ar(0, out);
 }).store;
 
@@ -35,6 +36,8 @@ SynthDef("reverb", {
 a = Synth("reverb");
 
 e = Synth("moog");
+
+e = Synth("sine");
 
 b = Synth("reso", ["freq", 80]);
 

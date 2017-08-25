@@ -72,7 +72,7 @@ void PostProcess::updateFx(int type, ofVec2f pos) {
 		kaleido->setSegments(length * 10.0);
 		break;
 	case 1:
-		noise->setAmplitude(length);
+		noise->setAmplitude(length * 0.5);
 		break;
 	case 2:
 		pixel->resolution = ofVec2f((1.0 - pos.x) * 50.0, (1.0 - pos.y) * 50.0);

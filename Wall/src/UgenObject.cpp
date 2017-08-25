@@ -24,9 +24,11 @@ UgenObject::UgenObject(int id) {
 		shader.load("shaders/circle");
 		synth = new ofxSCSynth("sine");
 		synth->create(0, 0);
-		baseFreq = ofRandom(2200, 4400);
+		baseFreq = ofRandom(8000, 16000);
 		synth->set("freq", baseFreq);
-		synth->set("mul", 0.001);
+		synth->set("detune", 1.001);
+		synth->set("lfo", 8.0);
+		synth->set("mul", 0.05);
 		break;
 	}
 }
