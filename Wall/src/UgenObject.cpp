@@ -15,7 +15,7 @@ UgenObject::UgenObject(int id) {
 		shader.load("shaders/noise");
 		synth = new ofxSCSynth("moog");
 		synth->create(0, 0);
-		synth->set("mul", 0.5);
+		synth->set("mul", 0.4);
 		synth->set("base", 20.0 * powf(1.5, app->objectController->noiseNum));
 		break;
 	case 1:
@@ -24,7 +24,7 @@ UgenObject::UgenObject(int id) {
 		shader.load("shaders/circle");
 		synth = new ofxSCSynth("ratio");
 		synth->create(0, 0);
-		synth->set("amp", 0.1);
+		synth->set("amp", 0.07);
 		synth->set("modMix", 1.0);
 		break;
 	}

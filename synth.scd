@@ -44,9 +44,10 @@ SynthDef("ratio",{
 	p = FloatArray.new(3*n);
 	q = FloatArray.new(3*n);
 	d = 3.0;
-	mode = [0, 4, 7, 9];
+	//mode = [0, 4, 7, 9];
+	mode = 12;
 	n.do({ arg i; var freq;
-		freq = (mode.choose + 12).midicps * (ratio ** (i%16));
+		freq = mode.midicps * (ratio ** (i%n));
 		p.add(freq);
 		p.add(freq + d.rand2);
 		p.add(freq + d.rand2);
@@ -78,6 +79,7 @@ SynthDef("ratio",{
 SynthDef("fx", {
 	arg in0 = 0.0, in1 = 0.0, in2 = 0.0,
 	delaytime = 0.05, ringFreq = 8.0,
+	distortGain = 100.0,
 	mix = 0.8, room = 12.0, damp = 0.5, amp = 1.0;
 	var fx0, fx1, fx2, modulator, in, out;
 
@@ -85,11 +87,12 @@ SynthDef("fx", {
 	8.do({out = AllpassL.ar(in, 0.1, LFNoise2.kr([rrand(0.0, 0.1),rrand(0.0, 0.1)],0.01,0.06), 20.0) });
 	//out = FreeVerb2.ar(in[0], in[1], mix, room, damp, amp);
 
-	fx0 = CombL.ar(out, 1.0,  [delaytime, delaytime * 1.001], 5) * 0.35;
+	fx0 = CombL.ar(out, 1.0,  [delaytime, delaytime * 1.001], 5) * 0.5;
 	modulator = SinOsc.ar([ringFreq, ringFreq * 1.01], [0, 0.5pi]) * 1.5;
 	fx1 = in ring1: modulator;
+	fx2 = (in * distortGain).softclip * 0.5;
 
-	out = (fx0 * in0) + (fx1 * in1) + out;
+	out = (fx0 * in0) + (fx1 * in1) + (fx2 * in2) + out;
 	out = LeakDC.ar(out);
 	out = Limiter.ar(MidEQ.ar(out, 14000, 0.8, 8)) * amp;
 	Out.ar(0, out);

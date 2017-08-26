@@ -114,18 +114,24 @@ void PostProcess::addFx(int num) {
 		if (!playSynth) {
 			deleteFx();
 			synth->set("in1", 1.0);
-			synth->set("ringFreq", ofRandom(6.0, 8.0));
+			synth->set("ringFreq", ofRandom(5.0, 10.0));
 			playSynth = true;
 		}
 		break;
 	case 2:
-		pixel->setEnabled(true);
+		toon->setEnabled(true);
+		if (!playSynth) {
+			deleteFx();
+			synth->set("in2", 1.0);
+			synth->set("distortGain", ofRandom(100, 1000));
+			playSynth = true;
+		}
 		break;
 	case 3:
 		darken->setEnabled(true);
 		break;
 	case 4:
-		toon->setEnabled(true);
+		pixel->setEnabled(true);
 		break;
 	case 5:
 		contrast->setEnabled(true);
@@ -166,6 +172,7 @@ void PostProcess::deleteFx() {
 	if (playSynth) {
 		synth->set("in0", 0.0);
 		synth->set("in1", 0.0);
+		synth->set("in2", 0.0);
 		playSynth = false;
 	}
 }
