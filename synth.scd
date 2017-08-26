@@ -17,7 +17,7 @@ SynthDef("moog", {
 	out = (sig1 + sig2) * env;
 	12.do({ out = AllpassL.ar(out, 0.1, LFNoise2.kr([rrand(0.0, 0.01),rrand(0.0, 0.01)],0.01,0.06), 0.5) });
 	out = MidEQ.ar(out, 40, 0.75, 8);
-	out = Limiter.ar(out, 0.8);
+	out = Limiter.ar(out, 1.0);
 	out = LeakDC.ar(out).softclip();
 	//out = Limiter.ar(out, 0.8);
 	//out = out.softclip();
