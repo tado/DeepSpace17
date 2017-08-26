@@ -15,7 +15,7 @@ UgenObject::UgenObject(int id) {
 		shader.load("shaders/noise");
 		synth = new ofxSCSynth("moog");
 		synth->create(0, 0);
-		synth->set("mul", 0.8);
+		synth->set("mul", 0.5);
 		synth->set("base", 20.0 * powf(1.5, app->objectController->noiseNum));
 		break;
 	case 1:
@@ -28,7 +28,7 @@ UgenObject::UgenObject(int id) {
 		synth->set("freq", baseFreq);
 		synth->set("detune", 1.001);
 		synth->set("lfo", 8.0);
-		synth->set("mul", 0.05);
+		synth->set("mul", 0.02);
 		break;
 	}
 }
@@ -45,8 +45,8 @@ void UgenObject::update() {
 	float lenY = abs(0.5 - pos.y);
 	switch (type){
 	case 0:
-		synth->set("freq", ofMap(lenX, 0, 0.5, 1000, 0));
-		synth->set("gain", ofMap(lenY, 0, 0.5, 3.5, 0));
+		synth->set("freq", ofMap(lenX, 0, 0.5, 600, 0));
+		synth->set("gain", ofMap(lenY, 0, 0.5, 3.0, 0));
 		break;
 	case 1:
 		synth->set("freq", baseFreq - (baseFreq * length * 0.2));

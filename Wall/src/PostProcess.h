@@ -10,6 +10,7 @@ public:
 	void draw();
 	void resetPostProcess();
 	void addFx(int num);
+	void deleteFx();
 	void updateFx(int type, ofVec2f pos);
 	~PostProcess();
 

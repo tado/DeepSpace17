@@ -5,7 +5,7 @@ PostProcess::PostProcess() {
 	scale = 1.0;
 	playSynth = false;
 
-	synth = new ofxSCSynth("comb");
+	synth = new ofxSCSynth("fx");
 	synth->create(0, 0);
 
 	//Postprocessing
@@ -103,13 +103,17 @@ void PostProcess::addFx(int num) {
 	case 0:
 		kaleido->setEnabled(true);
 		if (!playSynth) {
-			synth->set("inamp", 1.0);
-			synth->set("delaytime", ofRandom(0.005, 0.05));
+			synth->set("in0", 1.0);
+			synth->set("delaytime", ofRandom(0.01, 0.06));
 			playSynth = true;
 		}
 		break;
 	case 1:
 		noise->setEnabled(true);
+		if (!playSynth) {
+			synth->set("in1", 1.0);
+			playSynth = true;
+		}
 		break;
 	case 2:
 		pixel->setEnabled(true);
@@ -152,6 +156,14 @@ void PostProcess::addFx(int num) {
 		bleach->setEnabled(true);
 		break;
 	 */
+	}
+}
+
+void PostProcess::deleteFx() {
+	if (playSynth) {
+		synth->set("in0", 0.0);
+		synth->set("in1", 0.0);
+		playSynth = false;
 	}
 }
 
