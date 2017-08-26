@@ -7,7 +7,7 @@ ObjectController::ObjectController() {
 	ofClear(0, 0, 0);
 	fbo.end();
 
-	thresh = 0.1;
+	thresh = 0.15;
 	ugenMax = 4;
 	noiseNum = 0;
 	circleNum = 0;

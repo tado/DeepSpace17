@@ -103,6 +103,7 @@ void PostProcess::addFx(int num) {
 	case 0:
 		kaleido->setEnabled(true);
 		if (!playSynth) {
+			deleteFx();
 			synth->set("in0", 1.0);
 			synth->set("delaytime", ofRandom(0.01, 0.06));
 			playSynth = true;
@@ -111,6 +112,7 @@ void PostProcess::addFx(int num) {
 	case 1:
 		noise->setEnabled(true);
 		if (!playSynth) {
+			deleteFx();
 			synth->set("in1", 1.0);
 			playSynth = true;
 		}

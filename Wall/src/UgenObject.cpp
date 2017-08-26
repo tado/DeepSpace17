@@ -22,13 +22,9 @@ UgenObject::UgenObject(int id) {
 	default:
 		app->objectController->circleNum++;
 		shader.load("shaders/circle");
-		synth = new ofxSCSynth("sine");
+		synth = new ofxSCSynth("ratio");
 		synth->create(0, 0);
-		baseFreq = ofRandom(8000, 16000);
-		synth->set("freq", baseFreq);
-		synth->set("detune", 1.001);
-		synth->set("lfo", 8.0);
-		synth->set("mul", 0.02);
+		synth->set("amp", 0.1);
 		break;
 	}
 }
@@ -49,7 +45,8 @@ void UgenObject::update() {
 		synth->set("gain", ofMap(lenY, 0, 0.5, 3.0, 0));
 		break;
 	case 1:
-		synth->set("freq", baseFreq - (baseFreq * length * 0.2));
+		synth->set("lpf", ofMap(lenX, 0, 0.5, 8000, 0));
+		synth->set("rq", ofMap(lenY, 0, 0.5, 0.1, 0.7));
 		break;
 	}
 	
@@ -67,7 +64,7 @@ void UgenObject::draw() {
 	shader.end();
 }
 
-UgenObject::~UgenObject(){
+UgenObject::~UgenObject() {
 	ofApp *app = ((ofApp*)ofGetAppPtr());
 	switch (type) {
 	case 0:
