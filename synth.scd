@@ -15,7 +15,7 @@ SynthDef("moog", {
 	sig1 = MoogFF.ar(Pulse.ar([base, base*detune], 0.3), freq, gain, 0, mul);
 	sig2 = MoogFF.ar(Pulse.ar([base * 3.0, base * 3.0 * detune], 0.7), freq, gain, 0, mul);
 	out = (sig1 + sig2) * env;
-	out = MidEQ.ar(out, 50, 0.8, 8);
+	out = MidEQ.ar(out, 40, 0.75, 8);
 	out = Limiter.ar(out, 0.8);
 	out = LeakDC.ar(out).softclip();
 	//12.do({ out = AllpassL.ar(out, 0.1, LFNoise2.kr([rrand(0.0, 0.01),rrand(0.0, 0.01)],0.01,0.06), 0.5) });
@@ -33,7 +33,8 @@ SynthDef("reso", {
 }).store;
 
 SynthDef("ratio",{
-	arg lpf=8000, rq=0.2,atk=0.01,rel=1.0,modSpeed=6.0,modMix=0.0,fx=0.3, gain=1,amp = 0.5;
+	arg lpf=8000, rq=0.2,atk=0.01,rel=1.0,
+	modSpeed=6.0,modMix=0.0,fx=0.3, gain=1,amp = 0.5;
 	var env, ratio, n, d, p, q, mode, z, w, pul, mod,out;
 
 	env = EnvGen.kr(Env.new([0,1], [2], 'sine'));
@@ -45,7 +46,7 @@ SynthDef("ratio",{
 	d = 3.0;
 	mode = [0, 4, 7, 9];
 	n.do({ arg i; var freq;
-		freq = (mode.choose+12).midicps * (ratio ** (i%16));
+		freq = (mode.choose + 12).midicps * (ratio ** (i%16));
 		p.add(freq);
 		p.add(freq + d.rand2);
 		p.add(freq + d.rand2);
@@ -76,16 +77,17 @@ SynthDef("ratio",{
 
 SynthDef("fx", {
 	arg in0 = 0.0, in1 = 0.0, in2 = 0.0,
-	delaytime = 0.05,
+	delaytime = 0.05, ringFreq = 8.0,
 	mix = 0.8, room = 12.0, damp = 0.5, amp = 1.0;
-	var fx0, fx1, fx2, in, out;
+	var fx0, fx1, fx2, modulator, in, out;
 
 	in = In.ar(3, 2);
 	8.do({out = AllpassL.ar(in, 0.1, LFNoise2.kr([rrand(0.0, 0.1),rrand(0.0, 0.1)],0.01,0.06), 20.0) });
 	//out = FreeVerb2.ar(in[0], in[1], mix, room, damp, amp);
 
 	fx0 = CombL.ar(out, 1.0,  [delaytime, delaytime * 1.001], 5) * 0.35;
-	fx1 = out * SinOsc.ar([8.0, 8.1], 0, 0.49, 0.5) * 1.5;
+	modulator = SinOsc.ar([ringFreq, ringFreq * 1.01], [0, 0.5pi]) * 1.5;
+	fx1 = in ring1: modulator;
 
 	out = (fx0 * in0) + (fx1 * in1) + out;
 	out = LeakDC.ar(out);

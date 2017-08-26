@@ -114,6 +114,7 @@ void PostProcess::addFx(int num) {
 		if (!playSynth) {
 			deleteFx();
 			synth->set("in1", 1.0);
+			synth->set("ringFreq", ofRandom(6.0, 8.0));
 			playSynth = true;
 		}
 		break;
