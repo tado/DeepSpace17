@@ -15,10 +15,10 @@ SynthDef("moog", {
 	sig1 = MoogFF.ar(Pulse.ar([base, base*detune], 0.3), freq, gain, 0, mul);
 	sig2 = MoogFF.ar(Pulse.ar([base * 3.0, base * 3.0 * detune], 0.7), freq, gain, 0, mul);
 	out = (sig1 + sig2) * env;
+	12.do({ out = AllpassL.ar(out, 0.1, LFNoise2.kr([rrand(0.0, 0.01),rrand(0.0, 0.01)],0.01,0.06), 0.5) });
 	out = MidEQ.ar(out, 40, 0.75, 8);
 	out = Limiter.ar(out, 0.8);
 	out = LeakDC.ar(out).softclip();
-	//12.do({ out = AllpassL.ar(out, 0.1, LFNoise2.kr([rrand(0.0, 0.01),rrand(0.0, 0.01)],0.01,0.06), 0.5) });
 	//out = Limiter.ar(out, 0.8);
 	//out = out.softclip();
 	Out.ar(3, out);

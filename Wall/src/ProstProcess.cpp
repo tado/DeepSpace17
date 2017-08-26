@@ -48,10 +48,11 @@ void PostProcess::resetPostProcess() {
 	kaleido->setEnabled(false);
 	noise->setEnabled(false);
 	pixel->setEnabled(false);
-	darken->setEnabled(false);
 	toon->setEnabled(false);	
 	contrast->setEnabled(false);
 	sss->setEnabled(false);
+
+	darken->setEnabled(true);
 
 	/*
 	edge->setEnabled(false);
@@ -79,13 +80,13 @@ void PostProcess::updateFx(int type, ofVec2f pos) {
 		noise->setAmplitude(length * 0.5);
 		break;
 	case 2:
-		pixel->resolution = ofVec2f((1.0 - pos.x) * 40.0, (1.0 - pos.y) * 40.0);
+		//toon->setLevel(length * 10.0);
 		break;
 	case 3:
 		darken->setBrightness(length*10.0);
 		break;
 	case 4:
-		toon->setLevel(length * 10.0);
+		pixel->resolution = ofVec2f((1.0 - pos.x) * 40.0, (1.0 - pos.y) * 40.0);
 		break;
 	case 5:
 		break;
@@ -120,6 +121,7 @@ void PostProcess::addFx(int num) {
 		break;
 	case 2:
 		toon->setEnabled(true);
+		toon->setLevel(4.0);
 		if (!playSynth) {
 			deleteFx();
 			synth->set("in2", 1.0);
