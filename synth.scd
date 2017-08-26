@@ -15,8 +15,9 @@ SynthDef("moog", {
 	sig1 = MoogFF.ar(Pulse.ar([base, base*detune], 0.3), freq, gain, 0, mul);
 	sig2 = MoogFF.ar(Pulse.ar([base * 3.0, base * 3.0 * detune], 0.7), freq, gain, 0, mul);
 	out = (sig1 + sig2) * env;
-	out = MidEQ.ar(out, 50, 0.8, 6);
-	out = LeakDC.ar(out);
+	out = MidEQ.ar(out, 50, 0.8, 8);
+	out = Limiter.ar(out, 0.8);
+	out = LeakDC.ar(out).softclip();
 	//12.do({ out = AllpassL.ar(out, 0.1, LFNoise2.kr([rrand(0.0, 0.01),rrand(0.0, 0.01)],0.01,0.06), 0.5) });
 	//out = Limiter.ar(out, 0.8);
 	//out = out.softclip();
@@ -36,7 +37,7 @@ SynthDef("ratio",{
 	var env, ratio, n, d, p, q, mode, z, w, pul, mod,out;
 
 	env = EnvGen.kr(Env.new([0,1], [2], 'sine'));
-	n = 128;
+	n = 64;
 	ratio = 1.5;
 	pul = Impulse.ar(modSpeed);
 	p = FloatArray.new(3*n);

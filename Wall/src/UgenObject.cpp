@@ -25,6 +25,7 @@ UgenObject::UgenObject(int id) {
 		synth = new ofxSCSynth("ratio");
 		synth->create(0, 0);
 		synth->set("amp", 0.1);
+		synth->set("modMix", 1.0);
 		break;
 	}
 }
@@ -45,8 +46,9 @@ void UgenObject::update() {
 		synth->set("gain", ofMap(lenY, 0, 0.5, 3.0, 0));
 		break;
 	case 1:
-		synth->set("lpf", ofMap(lenX, 0, 0.5, 8000, 0));
+		synth->set("lpf", ofMap(lenX, 0, 0.5, 18000, 0));
 		synth->set("rq", ofMap(lenY, 0, 0.5, 0.1, 0.7));
+		synth->set("modSpeed", ofMap(lenY, 0, 0.5, 12.0, 4.0));
 		break;
 	}
 	
