@@ -76,5 +76,5 @@ UgenObject::~UgenObject() {
 		app->objectController->circleNum--;
 		break;
 	}
-	synth->free();
+	synth->set("gate", -1.5);
 }

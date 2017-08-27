@@ -37,6 +37,7 @@ public:
 	float scale;
 
 	ofxSCSynth * synth;
+	ofxSCSynth *comb;
 	bool playSynth;
 };
 

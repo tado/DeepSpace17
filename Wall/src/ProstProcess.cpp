@@ -105,8 +105,10 @@ void PostProcess::addFx(int num) {
 		kaleido->setEnabled(true);
 		if (!playSynth) {
 			deleteFx();
-			synth->set("in0", 1.0);
-			synth->set("delaytime", ofRandom(0.01, 0.06));
+			//synth->set("in0", 1.0);
+			//synth->set("delaytime", ofRandom(0.01, 0.06));
+			comb = new ofxSCSynth("comb");
+			comb->create(0, 0);
 			playSynth = true;
 		}
 		break;

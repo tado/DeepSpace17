@@ -1,14 +1,14 @@
 (
 SynthDef("sine", {
-	arg freq = 440, mul = 0.5, detune=1.01, lfo=4.0;
+	arg freq = 440, mul = 0.5, detune=1.01, lfo=4.0, gate=1;
 	var out, mod;
 	mod = SinOsc.ar(lfo, 0, 0.4, 0.5);
 	out = SinOsc.ar([freq, freq*detune], 0, mul * mod);
-	Out.ar(3, out);
+	Out.ar(3, out* EnvGen.kr(Env.asr, gate, doneAction:2));
 }).store;
 
 SynthDef("moog", {
-	arg base = 40, freq = 100, gain = 1.0, mul = 1.0, detune=1.01;
+	arg base = 40, freq = 100, gain = 1.0, mul = 1.0, detune=1.01, gate=1;
 	var env, sig1, sig2, sig3, out;
 
 	env = EnvGen.kr(Env.new([0,1], [2], 'sine'));
@@ -18,23 +18,23 @@ SynthDef("moog", {
 	12.do({ out = AllpassL.ar(out, 0.1, LFNoise2.kr([rrand(0.0, 0.01),rrand(0.0, 0.01)],0.01,0.06), 0.5) });
 	out = MidEQ.ar(out, 40, 0.75, 8);
 	out = Limiter.ar(out, 1.0);
-	out = LeakDC.ar(out).softclip();
+	out = LeakDC.ar(out)* EnvGen.kr(Env.asr, gate, doneAction:2);
 	//out = Limiter.ar(out, 0.8);
 	//out = out.softclip();
 	Out.ar(3, out);
 }).store;
 
 SynthDef("reso", {
-	arg freq = 440, density = 0.1;
+	arg freq = 440, density = 0.1, gate=1;
 	var a = Resonz.ar(Array.fill(64, {Dust.ar(density)}),
 		freq * [1, 2, 4, 8, 16, 32, 64], 0.01).sum * 60;
-	a = Limiter.ar(Pan2.ar(a, LFNoise0.kr(2)), 0.8);
+	a = Limiter.ar(Pan2.ar(a, LFNoise0.kr(2)), 0.8)* EnvGen.kr(Env.asr, gate, doneAction:2);
 	Out.ar(3, a);
 }).store;
 
 SynthDef("ratio",{
 	arg lpf=8000, rq=0.2,atk=0.01,rel=1.0,
-	modSpeed=6.0,modMix=0.0,fx=0.3, gain=1,amp = 0.5;
+	modSpeed=6.0,modMix=0.0,fx=0.3, gain=1,amp = 0.5, gate=1;
 	var env, ratio, n, d, p, q, mode, z, w, pul, mod,out;
 
 	env = EnvGen.kr(Env.new([0,1], [2], 'sine'));
@@ -72,7 +72,7 @@ SynthDef("ratio",{
 	//	});
 	//4.do({ w = AllpassN.ar(w, 0.1,{[0.1.rand, 0.1.rand]}.dup(4), 1.0) });
 	8.do({ w = AllpassL.ar(w, 0.1, LFNoise2.kr([rrand(0.0, 0.1),rrand(0.0, 0.1)],0.01,0.15), 2) });
-	out = (out * (fx - 1.0)) + (w * fx);
+	out = (out * (fx - 1.0)) + (w * fx) * EnvGen.kr(Env.asr, gate, doneAction:2);
 	Out.ar(3 , out);
 }).store;
 
@@ -96,5 +96,18 @@ SynthDef("fx", {
 	out = LeakDC.ar(out);
 	out = Limiter.ar(MidEQ.ar(out, 14000, 0.8, 8)) * amp;
 	Out.ar(0, out);
+	Out.ar(10, out);
+}).store;
+
+
+SynthDef("comb", {
+	arg delaytime = 0.05;
+	var env, out;
+	out = In.ar(10, 2);
+	env = EnvGen.ar(Env.perc(0.01, 2.0), doneAction:2);
+	out = CombL.ar(out, 1.0,  [delaytime, delaytime * 1.001], 5) * 0.5 * env;
+	//out = CombL.ar(out, 0.01, 0.01, 1.0);
+	//out = out * env;
+	ReplaceOut.ar(0, out);
 }).store;
 )
