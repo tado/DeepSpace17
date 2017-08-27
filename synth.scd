@@ -26,10 +26,15 @@ SynthDef("moog", {
 
 SynthDef("reso", {
 	arg freq = 440, density = 0.1, gate=1;
-	var a = Resonz.ar(Array.fill(64, {Dust.ar(density)}),
-		freq * [1, 2, 4, 8, 16, 32, 64], 0.01).sum * 60;
-	a = Limiter.ar(Pan2.ar(a, LFNoise0.kr(2)), 0.8)* EnvGen.kr(Env.asr, gate, doneAction:2);
-	Out.ar(3, a);
+	var out, env;
+
+	env = EnvGen.kr(Env.new([0,1], [2], 'sine'));
+	out = Resonz.ar(Array.fill(64, {Dust.ar(density)}),
+		freq * [1, 2, 4, 8, 16], 0.01).sum * 35 * env;
+	//out = RLPF.ar(out, lpf, rq);
+	4.do({ out = AllpassL.ar(out, 0.1, LFNoise2.kr([rrand(0.0, 0.01),rrand(0.0, 0.01)],0.01,0.06), 0.15) });
+	out = Limiter.ar(Pan2.ar(out, LFNoise0.ar(2)), 0.8)* EnvGen.kr(Env.asr, gate, doneAction:2);
+	Out.ar(3, out);
 }).store;
 
 SynthDef("ratio",{
@@ -87,10 +92,10 @@ SynthDef("fx", {
 	8.do({out = AllpassL.ar(in, 0.1, LFNoise2.kr([rrand(0.0, 0.1),rrand(0.0, 0.1)],0.01,0.06), 20.0) });
 	//out = FreeVerb2.ar(in[0], in[1], mix, room, damp, amp);
 
-	fx0 = CombL.ar(out, 1.0,  [delaytime, delaytime * 1.001], 5) * 0.5;
+	fx0 = CombL.ar(out, 1.0,  [delaytime, delaytime * 1.5], 5) * 0.5;
 	modulator = SinOsc.ar([ringFreq, ringFreq * 1.01], [0, 0.5pi]) * 1.5;
 	fx1 = in ring1: modulator;
-	fx2 = (in * distortGain).softclip * 0.5;
+	fx2 = FreeVerb2.ar(in[0], in[1], mix, room, damp, amp);
 
 	out = (fx0 * in0) + (fx1 * in1) + (fx2 * in2) + out;
 	out = LeakDC.ar(out);

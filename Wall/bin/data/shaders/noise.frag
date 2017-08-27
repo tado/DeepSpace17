@@ -107,7 +107,8 @@ void main() {
 
     //float freq =  0.01 + length(vec2(0.5, 0.5) - mouse) * (2.0 + num);
     //vec2 freq = vec2(0.1, 0.1) + vec2(0.5 - mouse.x, 0.5 - mouse.y) * 8.0;
-    float freq =  1.5 - length(vec2(0.5, 0.5) - mouse) * (2.0 + num);
+    //float freq =  1.5 - length(vec2(0.5, 0.5) - mouse) * (2.0 + num);
+    float freq =  1.5 - length(vec2(0.5, 0.5) - mouse) * 2.0;
     vec2 pos = vec2(st) * freq;
     float br = 0.8 / num;
     float speed = 1.75;

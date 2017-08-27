@@ -23,5 +23,6 @@ public:
 	int ugenMax;
 	int noiseNum;
 	int circleNum;
+	int blinkNum;
 };
 

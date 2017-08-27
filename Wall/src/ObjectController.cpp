@@ -8,9 +8,10 @@ ObjectController::ObjectController() {
 	fbo.end();
 
 	thresh = 0.15;
-	ugenMax = 4;
+	ugenMax = 6;
 	noiseNum = 0;
 	circleNum = 0;
+	blinkNum = 0;
 
 	//Global reverb
 	//reverb = new ofxSCSynth("reverb");
@@ -66,15 +67,17 @@ void ObjectController::draw() {
 void ObjectController::addObject(int id) {
 	if (ugenObjects.size() < ugenMax) {
 		int type;
-		int typeNum[2] = {0, 0};
+		int typeNum[3] = {0, 0, 0};
 		//set ugen type
 		for (int i = 0; i < ugenObjects.size(); i++){
 			typeNum[ugenObjects[i]->type]++;
 		}
-		if (typeNum[0] <= typeNum[1]){
+		if (typeNum[0] < typeNum[1]) {
 			type = 0;
-		} else {
+		} else if (typeNum[1] < typeNum[2]) {
 			type = 1;
+		} else {
+			type = 2;
 		}
 
 		UgenObject *o = new UgenObject(id, type);

@@ -11,6 +11,14 @@ UgenObject::UgenObject(int id, int type) {
 
 	switch (type){
 	case 0:
+		app->objectController->circleNum++;
+		shader.load("shaders/circle");
+		synth = new ofxSCSynth("ratio");
+		synth->create(0, 0);
+		synth->set("amp", 0.07);
+		synth->set("modMix", 1.0);
+		break;
+	case 1:
 		app->objectController->noiseNum++;
 		shader.load("shaders/noise");
 		synth = new ofxSCSynth("moog");
@@ -18,14 +26,12 @@ UgenObject::UgenObject(int id, int type) {
 		synth->set("mul", 0.4);
 		synth->set("base", 20.0 * powf(1.5, app->objectController->noiseNum));
 		break;
-	case 1:
-	default:
-		app->objectController->circleNum++;
-		shader.load("shaders/circle");
-		synth = new ofxSCSynth("ratio");
+	case 2:
+		app->objectController->blinkNum++;
+		shader.load("shaders/blink");
+		synth = new ofxSCSynth("reso");
+		synth->set("freq", 110.0 * powf(1.5, app->objectController->blinkNum));
 		synth->create(0, 0);
-		synth->set("amp", 0.07);
-		synth->set("modMix", 1.0);
 		break;
 	}
 }
@@ -42,13 +48,16 @@ void UgenObject::update() {
 	float lenY = abs(0.5 - pos.y);
 	switch (type){
 	case 0:
-		synth->set("freq", ofMap(lenX, 0, 0.5, 600, 0));
-		synth->set("gain", ofMap(lenY, 0, 0.5, 3.0, 0));
-		break;
-	case 1:
 		synth->set("lpf", ofMap(lenX, 0, 0.5, 18000, 0));
 		synth->set("rq", ofMap(lenY, 0, 0.5, 0.1, 0.7));
 		synth->set("modSpeed", ofMap(lenY, 0, 0.5, 12.0, 4.0));
+		break;
+	case 1:
+		synth->set("freq", ofMap(lenX, 0, 0.5, 600, 0));
+		synth->set("gain", ofMap(lenY, 0, 0.5, 3.0, 0));
+		break;
+	case 2:
+		synth->set("freq", ofMap(lenY, 0, 0.5, 2000, 800));
 		break;
 	}
 	
@@ -70,10 +79,13 @@ UgenObject::~UgenObject() {
 	ofApp *app = ((ofApp*)ofGetAppPtr());
 	switch (type) {
 	case 0:
-		app->objectController->noiseNum--;
+		app->objectController->circleNum--;
 		break;
 	case 1:
-		app->objectController->circleNum--;
+		app->objectController->noiseNum--;
+		break;
+	case 2:
+		app->objectController->blinkNum--;
 		break;
 	}
 	synth->set("gate", -1.5);
