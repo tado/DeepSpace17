@@ -2,6 +2,8 @@
 
 #include "ofMain.h"
 #include "OSCSender.h"
+#include "SkeletonView.h"
+#include "ofxGui.h"
 
 class ofApp : public ofSimpleApp {
 public:
@@ -11,4 +13,8 @@ public:
 	void keyReleased(int key);
 
 	OSCSender *oscSender;
+	SkeletonView *skeletonView;
+	ofxPanel gui;
+	ofxToggle useLocal;
+	bool showGui;
 };
