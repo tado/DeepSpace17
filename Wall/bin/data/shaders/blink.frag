@@ -12,6 +12,6 @@ float rand(float n){
 void main() {
     vec2 st = gl_FragCoord.xy/resolution.x;
     float dist = length(vec2(0.5, 0.5) - mouse);
-    float br = pow(rand(time), 50.0 + (dist * 50.0)) * 1.0;
+    float br = pow(rand(time), 50.0 + (dist * 50.0)) * 2.0;
     gl_FragColor = vec4(vec3(br), 1.0);
 }
