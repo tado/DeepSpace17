@@ -6,12 +6,12 @@ SkeletonView::SkeletonView(){
 
 void SkeletonView::draw() {
 	ofApp *app = ((ofApp*)ofGetAppPtr());
-	float circleSize = ofGetWidth() / 40.0;
+	float circleSize = ofGetWidth() / 32.0;
 	ofSetColor(255);
 	ofSetCircleResolution(64);
 	ofNoFill();
 	ofSetLineWidth(4);
-
+	ofSetColor(100);
 	//draw circle  
 	for (auto it = app->oscSender->cursorList.begin(); it != app->oscSender->cursorList.end(); it++) {
 		ofxTuioCursor *blob = (*it);
@@ -23,6 +23,7 @@ void SkeletonView::draw() {
 	}
 
 	//draw lines
+	ofNoFill();
 	ofSetLineWidth(3);
 	for (auto i = app->oscSender->cursorList.begin(); i != app->oscSender->cursorList.end(); i++) {
 		for (auto j = i; j != app->oscSender->cursorList.end(); j++) {

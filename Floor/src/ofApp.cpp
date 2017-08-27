@@ -14,7 +14,8 @@ void ofApp::setup() {
 
 	//View
 	skeletonView = new SkeletonView();
-
+	drawCode = new DrawCode();
+	
 	//GUI
 	gui.setup();
 	gui.add(useLocal.setup("Use Localhost", true));
@@ -27,7 +28,11 @@ void ofApp::update() {
 }
 
 void ofApp::draw() {
+	ofEnableBlendMode(OF_BLENDMODE_ADD);
 	skeletonView->draw();
+	drawCode->draw();
+
+	ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 	if (showGui){
 		gui.draw();
 	}
