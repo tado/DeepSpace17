@@ -4,7 +4,7 @@
 
 class UgenObject {
 public:
-	UgenObject(int id);
+	UgenObject(int id, int type);
 	void update();
 	void draw();
 

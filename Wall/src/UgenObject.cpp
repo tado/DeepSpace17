@@ -1,12 +1,12 @@
 #include "UgenObject.h"
 #include "ofApp.h"
 
-UgenObject::UgenObject(int id) {
+UgenObject::UgenObject(int id, int type) {
 	ofApp *app = ((ofApp*)ofGetAppPtr());
 
 	this->id = id;
+	this->type = type;
 	int num = app->objectController->ugenObjects.size();
-	this->type = num % 2;
 	initTime = ofGetElapsedTimef();
 
 	switch (type){

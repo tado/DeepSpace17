@@ -65,7 +65,19 @@ void ObjectController::draw() {
 
 void ObjectController::addObject(int id) {
 	if (ugenObjects.size() < ugenMax) {
-		UgenObject *o = new UgenObject(id);
+		int type;
+		int typeNum[2] = {0, 0};
+		//set ugen type
+		for (int i = 0; i < ugenObjects.size(); i++){
+			typeNum[ugenObjects[i]->type]++;
+		}
+		if (typeNum[0] <= typeNum[1]){
+			type = 0;
+		} else {
+			type = 1;
+		}
+
+		UgenObject *o = new UgenObject(id, type);
 		ugenObjects.push_back(o);
 	} else {
 		FxObject *o = new FxObject(id);
