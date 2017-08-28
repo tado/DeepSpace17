@@ -8,5 +8,7 @@ public:
 	~DrawCode();
 
 	vector<string> code;
+	vector<string> synth;
+	ofTrueTypeFont font;
 };
 
