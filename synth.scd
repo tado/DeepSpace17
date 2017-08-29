@@ -15,12 +15,11 @@ SynthDef("moog", {
 	sig1 = MoogFF.ar(Pulse.ar([base, base*detune], 0.3), freq, gain, 0, mul);
 	sig2 = MoogFF.ar(Pulse.ar([base * 3.0, base * 3.0 * detune], 0.7), freq, gain, 0, mul);
 	out = (sig1 + sig2) * env;
-	12.do({ out = AllpassL.ar(out, 0.1, LFNoise2.kr([rrand(0.0, 0.01),rrand(0.0, 0.01)],0.01,0.06), 0.5) });
-	out = MidEQ.ar(out, 40, 0.75, 8);
-	out = Limiter.ar(out, 1.0);
+	12.do({ out = AllpassL.ar(out, 0.1, LFNoise2.kr([rrand(0.0, 0.01),rrand(0.0, 0.01)],0.01,0.06), 1.0) });
+	out = MidEQ.ar(out, 50, 0.75, 8);
+	//out = Limiter.ar(out, 1.0);
+	//out = Compander.ar(out);
 	out = LeakDC.ar(out)* EnvGen.kr(Env.asr, gate, doneAction:2);
-	//out = Limiter.ar(out, 0.8);
-	//out = out.softclip();
 	Out.ar(3, out);
 }).store;
 
@@ -30,10 +29,12 @@ SynthDef("reso", {
 
 	env = EnvGen.kr(Env.new([0,1], [2], 'sine'));
 	out = Resonz.ar(Array.fill(64, {Dust.ar(density)}),
-		freq * [1, 2, 4, 8, 16], 0.01).sum * 35 * env;
+		freq * [1, 2, 4, 8, 16], 0.01).sum * 10 * env;
 	//out = RLPF.ar(out, lpf, rq);
-	4.do({ out = AllpassL.ar(out, 0.1, LFNoise2.kr([rrand(0.0, 0.01),rrand(0.0, 0.01)],0.01,0.06), 0.15) });
-	out = Limiter.ar(Pan2.ar(out, LFNoise0.ar(2)), 0.8)* EnvGen.kr(Env.asr, gate, doneAction:2);
+	//4.do({ out = AllpassL.ar(out, 0.1, LFNoise2.kr([rrand(0.0, 0.01),rrand(0.0, 0.01)],0.01,0.06), 0.05) });
+	//out = Limiter.ar(Pan2.ar(out, LFNoise0.ar(2)), 1.0)* EnvGen.kr(Env.asr, gate, doneAction:2);
+	//out = Compander.ar(Pan2.ar(out, LFNoise0.ar(8))) * EnvGen.kr(Env.asr, gate, doneAction:2);
+	out = Pan2.ar(out, LFNoise0.ar(8)) * EnvGen.kr(Env.asr, gate, doneAction:2);
 	Out.ar(3, out);
 }).store;
 
@@ -72,10 +73,6 @@ SynthDef("ratio",{
 	w = out;
 	mod = out * Decay2.ar(pul, atk, rel);
 	out = (mod * modMix) + (out * (1-modMix));
-	//4.do({
-	//	w = AllpassL.ar(out, 0.2,LFNoise2.kr([rrand(0.1, 0.2),rrand(0.1, 0.2)],0.05,0.15), 2)
-	//	});
-	//4.do({ w = AllpassN.ar(w, 0.1,{[0.1.rand, 0.1.rand]}.dup(4), 1.0) });
 	8.do({ w = AllpassL.ar(w, 0.1, LFNoise2.kr([rrand(0.0, 0.1),rrand(0.0, 0.1)],0.01,0.15), 2) });
 	out = (out * (fx - 1.0)) + (w * fx) * EnvGen.kr(Env.asr, gate, doneAction:2);
 	Out.ar(3 , out);
@@ -89,7 +86,7 @@ SynthDef("fx", {
 	var fx0, fx1, fx2, modulator, in, out;
 
 	in = In.ar(3, 2);
-	8.do({out = AllpassL.ar(in, 0.1, LFNoise2.kr([rrand(0.0, 0.1),rrand(0.0, 0.1)],0.01,0.06), 20.0) });
+	8.do({out = AllpassL.ar(in, 0.1, LFNoise2.kr([rrand(0.0, 0.1),rrand(0.0, 0.1)],0.01,0.06), 2.0) });
 	//out = FreeVerb2.ar(in[0], in[1], mix, room, damp, amp);
 
 	fx0 = CombL.ar(out, 1.0,  [delaytime, delaytime * 1.5], 5) * 0.5;
@@ -98,8 +95,9 @@ SynthDef("fx", {
 	fx2 = FreeVerb2.ar(in[0], in[1], mix, room, damp, amp);
 
 	out = (fx0 * in0) + (fx1 * in1) + (fx2 * in2) + out;
-	out = LeakDC.ar(out);
-	out = Limiter.ar(MidEQ.ar(out, 14000, 0.8, 8)) * amp;
+	out = LeakDC.ar(MidEQ.ar(out, 14000, 1.0, 8));
+	out = Compander.ar(out);
+	//out = Limiter.ar(MidEQ.ar(out, 14000, 1.0, 8)) * amp;
 	Out.ar(0, out);
 	Out.ar(10, out);
 }).store;
