@@ -15,7 +15,7 @@ void ofApp::setup(){
 	objectController = new ObjectController();
 
 	//window loc
-	ofSetWindowPosition(0, 40);
+	//ofSetWindowPosition(0, 40);
 }
 
 void ofApp::update(){

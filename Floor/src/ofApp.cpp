@@ -7,20 +7,20 @@ void ofApp::setup() {
 	glEnable(GL_POINT_SMOOTH);
 
 	//window loc
-	ofSetWindowPosition(0, 40);
+	//ofSetWindowPosition(0, 40);
 
-	//OSC
-	oscSender = new OSCSender();
-
-	//View
-	skeletonView = new SkeletonView();
-	drawCode = new DrawCode();
-	
 	//GUI
 	gui.setup();
 	gui.add(useLocal.setup("Use Localhost", true));
 	gui.loadFromFile("settings.xml");
 	showGui = false;
+
+	//View
+	skeletonView = new SkeletonView();
+	drawCode = new DrawCode();
+
+	//OSC
+	oscSender = new OSCSender();
 }
 
 void ofApp::update() {

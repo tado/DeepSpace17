@@ -115,28 +115,66 @@ void DrawCode::draw() {
 	int n = 0;
 	int s = 0;
 	for (auto it = app->oscSender->cursorList.begin(); it != app->oscSender->cursorList.end(); it++) {
+		//Draw GLSL code
 		ofxTuioCursor *blob = (*it);
 		font.drawString(code[n], blob->getX()*ofGetWidth() + margin, blob->getY()*ofGetHeight() + margin);
 		n = (n + 1) % code.size();
+		//Draw SuperCollider code
 		ofPushMatrix();
 		ofTranslate(blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight());
 		ofRotateZ(180);
 		font.drawString(synth[s], margin, margin);
 		ofPopMatrix();
 		s = (s + 1) % code.size();
+		//Draw x, y pos
+		font.drawString(ofToString(blob->getX()*ofGetWidth()), blob->getX()*ofGetWidth() + margin, blob->getY()*ofGetHeight());
+		font.drawString(", " + ofToString(blob->getX()*ofGetHeight()), blob->getX()*ofGetWidth() + margin + 40, blob->getY()*ofGetHeight());
 	}
 	n = 0;
 	s = 0;
 	for (auto it = app->oscSender->objectList.begin(); it != app->oscSender->objectList.end(); it++) {
+		//Draw GLSL code
 		ofxTuioObject *blob = (*it);
 		font.drawString(code[n], blob->getX()*ofGetWidth() + margin, blob->getY()*ofGetHeight() + margin);
 		n = (n + 1) % code.size();
+		//Draw SuperCollider code
 		ofPushMatrix();
 		ofTranslate(blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight());
 		ofRotateZ(180);
 		font.drawString(synth[s], margin, margin);
 		ofPopMatrix();
 		s = (s + 1) % code.size();
+		//Draw x, y pos
+		font.drawString(ofToString(blob->getX()*ofGetWidth()), blob->getX()*ofGetWidth() + margin, blob->getY()*ofGetHeight());
+		font.drawString(", " + ofToString(blob->getX()*ofGetHeight()), blob->getX()*ofGetWidth() + margin + 40, blob->getY()*ofGetHeight());
+	}
+
+	//draw length
+	for (auto i = app->oscSender->cursorList.begin(); i != app->oscSender->cursorList.end(); i++) {
+		for (auto j = i; j != app->oscSender->cursorList.end(); j++) {
+			ofxTuioCursor *blobi = (*i);
+			ofxTuioCursor *blobj = (*j);
+			ofVec2f begin = ofVec2f(blobi->getX()*ofGetWidth(), blobi->getY()*ofGetHeight());
+			ofVec2f end = ofVec2f(blobj->getX()*ofGetWidth(), blobj->getY()*ofGetHeight());
+			if (begin.distance(end) > 0) {
+				ofVec2f middle = (begin + end) / 2.0;
+				ofDrawCircle(middle, ofGetWidth() / 600.0);
+				font.drawString(ofToString(begin.distance(end)), middle.x + margin / 2.0, middle.y);
+			}
+		}
+	}
+	for (auto i = app->oscSender->objectList.begin(); i != app->oscSender->objectList.end(); i++) {
+		for (auto j = i; j != app->oscSender->objectList.end(); j++) {
+			ofxTuioObject *blobi = (*i);
+			ofxTuioObject *blobj = (*j);
+			ofVec2f begin = ofVec2f(blobi->getX()*ofGetWidth(), blobi->getY()*ofGetHeight());
+			ofVec2f end = ofVec2f(blobj->getX()*ofGetWidth(), blobj->getY()*ofGetHeight());
+			if (begin.distance(end) > 0) {
+				ofVec2f middle = (begin + end) / 2.0;
+				ofDrawCircle(middle, ofGetWidth() / 600.0);
+				font.drawString(ofToString(begin.distance(end)), middle.x + margin / 2.0, middle.y);
+			}
+		}
 	}
 }
 
