@@ -28,4 +28,5 @@ public:
 	OSCReceiver *oscReceiver;
 	ofxSCSynthServer *server;
 	ObjectController *objectController;
+	bool showDebug;
 };

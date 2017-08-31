@@ -5,6 +5,7 @@ void ofApp::setup() {
 	ofBackground(0);
 	ofEnableSmoothing();
 	glEnable(GL_POINT_SMOOTH);
+	ofHideCursor();
 
 	//window loc
 	//ofSetWindowPosition(0, 40);

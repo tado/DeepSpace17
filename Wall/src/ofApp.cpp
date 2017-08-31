@@ -3,6 +3,8 @@
 void ofApp::setup(){
 	ofBackground(0);
 	ofSetFrameRate(60);
+	ofHideCursor();
+	showDebug = true;
 
 	//boot sc server
 	server = new ofxSCSynthServer();
@@ -26,6 +28,9 @@ void ofApp::update(){
 void ofApp::draw(){
 	//oscReceiver->draw();
 	objectController->draw();
+	if (showDebug){
+		ofDrawBitmapStringHighlight("fps = " + ofToString(ofGetFrameRate()), 40, 40);
+	}
 }
 
 void ofApp::exit() {
@@ -41,6 +46,13 @@ void ofApp::keyPressed(int key){
 void ofApp::keyReleased(int key) {
 	if (key == 'f') {
 		ofToggleFullscreen();
+	}
+	if (key == 'd'){
+		if (showDebug){
+			showDebug = false;
+		} else {
+			showDebug = true;
+		}
 	}
 }
 
