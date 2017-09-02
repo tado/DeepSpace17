@@ -104,18 +104,18 @@ void PostProcess::addFx(int num) {
 	case 0:
 		kaleido->setEnabled(true);
 		if (!playSynth) {
-			deleteFx();
-			synth->set("in0", 1.0);
-			synth->set("delaytime", ofRandom(0.01, 0.06));
+			//deleteFx();
+			ofxSCSynth *fx = new ofxSCSynth("comb");
+			fx->create(0, 0);
+			fx->set("delaytime", ofRandom(0.01, 0.06));
 			playSynth = true;
 		}
 		break;
 	case 1:
 		noise->setEnabled(true);
 		if (!playSynth) {
-			deleteFx();
-			synth->set("in1", 1.0);
-			synth->set("ringFreq", ofRandom(5.0, 10.0));
+			ofxSCSynth *fx = new ofxSCSynth("am");
+			fx->create(0, 0);
 			playSynth = true;
 		}
 		break;
@@ -123,9 +123,8 @@ void PostProcess::addFx(int num) {
 		toon->setEnabled(true);
 		toon->setLevel(4.0);
 		if (!playSynth) {
-			deleteFx();
-			synth->set("in2", 1.0);
-			synth->set("distortGain", ofRandom(100, 1000));
+			ofxSCSynth *fx = new ofxSCSynth("rev");
+			fx->create(0, 0);
 			playSynth = true;
 		}
 		break;
