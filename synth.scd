@@ -82,7 +82,7 @@ SynthDef("comb", {
 	out = InFeedback.ar(3, 2);
 	env = EnvGen.ar(Env.perc(0.01, 2.0, 0.75), doneAction:2);
 	out = CombL.ar(out, 1.0,  [delaytime, delaytime * 1.001], 5) * env;
-	//out = Compander.ar(out);
+	out = out.dup;
 	Out.ar(12, out);
 }).store;
 
@@ -93,6 +93,7 @@ SynthDef("am", {
 	env = EnvGen.ar(Env.perc(0.01, 2.0, 1.0), doneAction:2);
 	modulator = SinOsc.ar([ringFreq, ringFreq * 1.01], [0, 0.5pi]) * 1.5;
 	out = out ring1: modulator * env;
+	out = out.dup;
 	Out.ar(12, out);
 }).store;
 
