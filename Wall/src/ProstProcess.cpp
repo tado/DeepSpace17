@@ -20,9 +20,10 @@ PostProcess::PostProcess() {
 	toon = post.createPass<ToonPass>();
 	pixel = post.createPass<PixelatePass>();
 	sss = post.createPass<FakeSSSPass>();
+
 	darken = post.createPass<LimbDarkeningPass>();
-	contrast = post.createPass<ContrastPass>();
 	/*
+	contrast = post.createPass<ContrastPass>();
 	edge = post.createPass<EdgePass>();
 	god = post.createPass<GodRaysPass>();
 	conv = post.createPass<ConvolutionPass>();
@@ -52,12 +53,12 @@ void PostProcess::resetPostProcess() {
 	noise->setEnabled(false);
 	pixel->setEnabled(false);
 	toon->setEnabled(false);
-	contrast->setEnabled(false);
 	sss->setEnabled(false);
 
 	darken->setEnabled(true);
 
 	/*
+	contrast->setEnabled(false);
 	edge->setEnabled(false);
 	conv->setEnabled(false);
 	dof->setEnabled(false);
@@ -90,19 +91,13 @@ void PostProcess::updateFx(int type, ofVec2f pos) {
 		break;
 	case 4:
 		break;
-	case 5:
-		break;
-	case 6:
-		darken->setBrightness(length*10.0);
-		break;
-	default:
-		break;
 	}
 }
 
 void PostProcess::addFx(int type, int id) {
 	resetPostProcess();
-	switch (type) {
+	int n = type % 5;
+	switch (n) {
 	case 0:
 		kaleido->setEnabled(true);
 		break;
@@ -119,40 +114,9 @@ void PostProcess::addFx(int type, int id) {
 	case 4:
 		sss->setEnabled(true);
 		break;
-	case 5:
-		contrast->setEnabled(true);
-		break;
-	case 6:
-		darken->setEnabled(true);
-		break;
-        /*
-		case 7:
-			contrast->setEnabled(true);
-			break;
-		case 8:
-			edge->setEnabled(true);
-			break;
-		case 10:
-			sss->setEnabled(true);
-			break;
-		case 11:
-			fxaa->setEnabled(true);
-			break;
-		case 12:
-			vtilt->setEnabled(true);
-			break;
-		case 13:
-			htilt->setEnabled(true);
-			break;
-		case 14:
-			god->setEnabled(true);
-			break;
-		case 15:
-			bleach->setEnabled(true);
-			break;
-		 */
 	}
 
+	//add sound fx
 	if (id != currentFx) {
 		if (usePostFx) {
 			postFx->free();
