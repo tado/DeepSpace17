@@ -36,10 +36,12 @@ public:
 
 	float scale;
 
-	ofxSCSynth * fx;
+	ofxSCSynth *fx;
+	ofxSCSynth * postFx;
 	ofxSCSynth * mix;
 	ofxSCSynth *comb;
-	bool playSynth;
+	//bool playSynth;
 	int currentFx;
+	bool usePostFx;
 };
 

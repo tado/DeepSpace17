@@ -3,7 +3,8 @@
 
 PostProcess::PostProcess() {
 	scale = 1.0;
-	playSynth = false;
+	//playSynth = false;
+	usePostFx = false;
 	currentFx = -1;
 
 	fx = new ofxSCSynth("fx");
@@ -155,21 +156,25 @@ void PostProcess::addFx(int type, int id) {
 	}
 
 	if (id != currentFx) {
-		ofxSCSynth *fx;
+		if (usePostFx) {
+			postFx->free();
+			usePostFx = true;
+		}
+
 		switch (type) {
 		case 0:
-			fx = new ofxSCSynth("comb");
-			fx->set("delaytime", ofRandom(0.01, 0.06));
-			fx->create(0, 0);
+			postFx = new ofxSCSynth("comb");
+			postFx->set("delaytime", ofRandom(0.01, 0.06));
+			postFx->create(0, 0);
 			break;
 		case 1:
-			fx = new ofxSCSynth("am");
-			fx->set("ringFreq", ofRandom(6.0, 10.0));
-			fx->create(0, 0);
+			postFx = new ofxSCSynth("am");
+			postFx->set("ringFreq", ofRandom(6.0, 10.0));
+			postFx->create(0, 0);
 			break;
 		case 2:
-			fx = new ofxSCSynth("rev");
-			fx->create(0, 0);
+			postFx = new ofxSCSynth("rev");
+			postFx->create(0, 0);
 			break;
 		}
 		currentFx = id;
