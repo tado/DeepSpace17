@@ -26,7 +26,7 @@ bool ofxSCSynthServer::boot(string hostname, unsigned int port) {
     // start scsynth
     STARTUPINFOA si;
     GetStartupInfoA(&si);
-	string strCmd = ".\\libs\\server\\win\\scsynth.exe -D 0 -u " + ofToString(port);
+	string strCmd = ".\\libs\\server\\win\\scsynth.exe -o 2 -D 0 -u " + ofToString(port);
 	LPSTR command = LPSTR(strCmd.c_str());
 	bool bSucess = false;
 	if (!CreateProcessA(NULL, command, NULL, NULL, TRUE, NULL, NULL, NULL, &si, &pi)) {

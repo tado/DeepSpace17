@@ -9,7 +9,7 @@ UgenObject::UgenObject(int id, int type) {
 	int num = app->objectController->ugenObjects.size();
 	initTime = ofGetElapsedTimef();
 
-	switch (type){
+	switch (type) {
 	case 0:
 		app->objectController->circleNum++;
 		shader.load("shaders/circle");
@@ -46,21 +46,26 @@ void UgenObject::update() {
 	float length = pos.distance(ofVec2f(0.5, 0.5));
 	float lenX = abs(0.5 - pos.x);
 	float lenY = abs(0.5 - pos.y);
-	switch (type){
+	float pan = ofMap(pos.x, 0.0, 1.0, -1.0, 1.0);
+
+	switch (type) {
 	case 0:
 		synth->set("lpf", ofMap(lenX, 0, 0.5, 18000, 0));
 		synth->set("rq", ofMap(lenY, 0, 0.5, 0.1, 0.7));
 		synth->set("modSpeed", ofMap(lenY, 0, 0.5, 12.0, 4.0));
+		synth->set("pan", pan);
 		break;
 	case 1:
 		synth->set("freq", ofMap(lenX, 0, 0.5, 600, 0));
 		synth->set("gain", ofMap(lenY, 0, 0.5, 3.0, 0));
+		synth->set("pan", pan);
 		break;
 	case 2:
 		synth->set("freq", ofMap(lenY, 0, 0.5, 2000, 800));
+		synth->set("pan", pan);
 		break;
 	}
-	
+
 }
 
 void UgenObject::draw() {
