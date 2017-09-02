@@ -1,4 +1,5 @@
 (
+/*
 SynthDef("sine", {
 	arg freq = 440, mul = 0.5, detune=1.01, lfo=4.0, gate=1;
 	var out, mod;
@@ -6,6 +7,7 @@ SynthDef("sine", {
 	out = SinOsc.ar([freq, freq*detune], 0, mul * mod);
 	Out.ar(3, out* EnvGen.kr(Env.asr, gate, doneAction:2));
 }).store;
+*/
 
 SynthDef("moog", {
 	arg base = 40, freq = 100, gain = 1.0, mul = 1.0, detune=1.01, gate=1;
@@ -80,13 +82,11 @@ SynthDef("ratio",{
 
 SynthDef("fx", {
 	var in, out;
-
-	in = In.ar(3, 2);
-	8.do({out = AllpassL.ar(in, 0.1, LFNoise2.kr([rrand(0.0, 0.1),rrand(0.0, 0.1)],0.01,0.06), 2.0) });
-	//out = FreeVerb2.ar(in[0], in[1], mix, room, damp, amp);
+	in = InFeedback.ar(3, 2);
+	//8.do({out = AllpassL.ar(in, 0.1, LFNoise2.kr([rrand(0.0, 0.1),rrand(0.0, 0.1)],0.01,0.06), 2.0) });
+	out = FreeVerb2.ar(in[0], in[1], 0.3, 0.5, 0.5, 1.0);
 	//out = LeakDC.ar(MidEQ.ar(out, 14000, 1.0, 8));
-	out = Compander.ar(out);
-	Out.ar(0, out);
+	//out = Compander.ar(out);
 	Out.ar(10, out);
 }).store;
 
@@ -94,31 +94,43 @@ SynthDef("fx", {
 SynthDef("comb", {
 	arg delaytime = 0.05;
 	var env, out;
-	out = InFeedback.ar(10, 2);
-	env = EnvGen.ar(Env.perc(0.01, 2.0, 1.5), doneAction:2);
+	out = InFeedback.ar(3, 2);
+	env = EnvGen.ar(Env.perc(0.01, 4.0, 1.0), doneAction:2);
 	out = CombL.ar(out, 1.0,  [delaytime, delaytime * 1.001], 5) * env;
-	out = Compander.ar(out);
-	ReplaceOut.ar(0, out);
+	//out = Compander.ar(out);
+	Out.ar(12, out);
 }).store;
 
 SynthDef("am", {
 	arg ringFreq = 8.0;
 	var modulator, env, out;
-	out = InFeedback.ar(10, 2);
-	env = EnvGen.ar(Env.perc(0.01, 2.0, 1.5), doneAction:2);
+	out = InFeedback.ar(3, 2);
+	env = EnvGen.ar(Env.perc(0.01, 4.0, 1.0), doneAction:2);
 	modulator = SinOsc.ar([ringFreq, ringFreq * 1.01], [0, 0.5pi]) * 1.5;
 	out = out ring1: modulator * env;
-	out = Compander.ar(out);
-	ReplaceOut.ar(0, out);
+	//out = Compander.ar(out);
+	Out.ar(12, out);
 }).store;
 
 SynthDef("rev", {
 	arg mix = 0.8, room = 12.0, damp = 0.5, amp = 1.0;
 	var env, out;
-	out = InFeedback.ar(10, 2);
-	env = EnvGen.ar(Env.perc(0.01, 2.0, 1.5), doneAction:2);
+	out = InFeedback.ar(3, 2);
+	env = EnvGen.ar(Env.perc(0.01, 4.0, 1.0), doneAction:2);
 	out = FreeVerb2.ar(out[0], out[1], mix, room, damp, amp) * env;
-	out = Compander.ar(out);
-	ReplaceOut.ar(0, out);
+	//out = Compander.ar(out);
+	Out.ar(12, out);
 }).store;
+
+
+SynthDef("mix", {
+	arg amp = 0.75;
+	var in0, in1, out;
+	in0 = InFeedback.ar(10, 2);
+	in1 = InFeedback.ar(12, 2);
+	out = (in0 + in1) * amp;
+	out = Compander.ar(out);
+	Out.ar(0, out);
+}).store;
+
 )

@@ -9,7 +9,7 @@ public:
 	void update();
 	void draw();
 	void resetPostProcess();
-	void addFx(int num);
+	void addFx(int type, int id);
 	void deleteFx();
 	void updateFx(int type, ofVec2f pos);
 	~PostProcess();
@@ -36,8 +36,10 @@ public:
 
 	float scale;
 
-	ofxSCSynth * synth;
+	ofxSCSynth * fx;
+	ofxSCSynth * mix;
 	ofxSCSynth *comb;
 	bool playSynth;
+	int currentFx;
 };
 

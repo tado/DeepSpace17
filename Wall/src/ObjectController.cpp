@@ -30,17 +30,19 @@ void ObjectController::update() {
 	//select postprocess
 	float min = FLT_MAX;
 	int minType;
+	int minId;
 	for (int i = 0; i < fxObjects.size(); i++) {
 		for (int j = 0; j < ugenObjects.size(); j++) {
 			float length = ugenObjects[j]->pos.distance(fxObjects[i]->pos);
 			if (length < min) {
 				min = length;
 				minType = fxObjects[i]->type;
+				minId = fxObjects[i]->id;
 			}
 		}
 	}
 	if (min < thresh) {
-		postProcess.addFx(minType);
+		postProcess.addFx(minType, minId);
 	}
 	else {
 		postProcess.resetPostProcess();
