@@ -3,7 +3,6 @@
 
 PostProcess::PostProcess() {
 	scale = 1.0;
-	//playSynth = false;
 	usePostFx = false;
 	currentFx = -1;
 
@@ -18,12 +17,11 @@ PostProcess::PostProcess() {
 
 	kaleido = post.createPass<KaleidoscopePass>();
 	noise = post.createPass<NoiseWarpPass>();
-	pixel = post.createPass<PixelatePass>();
-	darken = post.createPass<LimbDarkeningPass>();
 	toon = post.createPass<ToonPass>();
-	contrast = post.createPass<ContrastPass>();
+	pixel = post.createPass<PixelatePass>();
 	sss = post.createPass<FakeSSSPass>();
-
+	darken = post.createPass<LimbDarkeningPass>();
+	contrast = post.createPass<ContrastPass>();
 	/*
 	edge = post.createPass<EdgePass>();
 	god = post.createPass<GodRaysPass>();
@@ -88,14 +86,14 @@ void PostProcess::updateFx(int type, ofVec2f pos) {
 		//toon->setLevel(length * 10.0);
 		break;
 	case 3:
-		darken->setBrightness(length*10.0);
+		pixel->resolution = ofVec2f((1.0 - pos.x) * 40.0, (1.0 - pos.y) * 40.0);
 		break;
 	case 4:
-		pixel->resolution = ofVec2f((1.0 - pos.x) * 40.0, (1.0 - pos.y) * 40.0);
 		break;
 	case 5:
 		break;
 	case 6:
+		darken->setBrightness(length*10.0);
 		break;
 	default:
 		break;
@@ -116,18 +114,18 @@ void PostProcess::addFx(int type, int id) {
 		toon->setLevel(4.0);
 		break;
 	case 3:
-		darken->setEnabled(true);
+		pixel->setEnabled(true);
 		break;
 	case 4:
-		pixel->setEnabled(true);
+		sss->setEnabled(true);
 		break;
 	case 5:
 		contrast->setEnabled(true);
 		break;
 	case 6:
-		sss->setEnabled(true);
+		darken->setEnabled(true);
 		break;
-		/*
+        /*
 		case 7:
 			contrast->setEnabled(true);
 			break;
@@ -164,7 +162,7 @@ void PostProcess::addFx(int type, int id) {
 		switch (type) {
 		case 0:
 			postFx = new ofxSCSynth("comb");
-			postFx->set("delaytime", ofRandom(0.01, 0.06));
+			postFx->set("delaytime", ofRandom(0.03, 0.06));
 			postFx->create(0, 0);
 			break;
 		case 1:
@@ -174,6 +172,16 @@ void PostProcess::addFx(int type, int id) {
 			break;
 		case 2:
 			postFx = new ofxSCSynth("rev");
+			postFx->create(0, 0);
+			break;
+		case 3:
+			postFx = new ofxSCSynth("comb");
+			postFx->set("delaytime", ofRandom(0.06, 0.12));
+			postFx->create(0, 0);
+			break;
+		case 4:
+			postFx = new ofxSCSynth("comb");
+			postFx->set("delaytime", ofRandom(0.1, 0.2));
 			postFx->create(0, 0);
 			break;
 		}

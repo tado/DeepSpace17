@@ -40,7 +40,6 @@ public:
 	ofxSCSynth * postFx;
 	ofxSCSynth * mix;
 	ofxSCSynth *comb;
-	//bool playSynth;
 	int currentFx;
 	bool usePostFx;
 };

@@ -84,7 +84,7 @@ SynthDef("fx", {
 	var in, out;
 	in = InFeedback.ar(3, 2);
 	//8.do({out = AllpassL.ar(in, 0.1, LFNoise2.kr([rrand(0.0, 0.1),rrand(0.0, 0.1)],0.01,0.06), 2.0) });
-	out = FreeVerb2.ar(in[0], in[1], 0.3, 2.0, 0.5, 1.0);
+	out = FreeVerb2.ar(in[0], in[1], 0.25, 2.0, 0.5, 1.0);
 	//out = LeakDC.ar(MidEQ.ar(out, 14000, 1.0, 8));
 	//out = Compander.ar(out);
 	Out.ar(10, out);
