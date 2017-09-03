@@ -79,7 +79,7 @@ SynthDef("comb", {
 	arg delaytime = 0.05;
 	var env, out;
 	out = InFeedback.ar(3, 2);
-	env = EnvGen.ar(Env.perc(0.01, 2.0, 0.9), doneAction:2);
+	env = EnvGen.ar(Env.perc(0.01, 2.0, 1.2), doneAction:2);
 	out = CombL.ar(out, 1.0,  [delaytime, delaytime * 1.5], 5) * env;
 	out = out.dup;
 	Out.ar(12, out);
@@ -100,7 +100,7 @@ SynthDef("rev", {
 	arg mix = 1.0, room = 20.0, damp = 0.0, amp = 1.0;
 	var env, out;
 	out = InFeedback.ar(3, 2);
-	env = EnvGen.ar(Env.perc(0.01, 2.0, 0.9), doneAction:2);
+	env = EnvGen.ar(Env.perc(0.01, 2.0, 1.5), doneAction:2);
 	out = FreeVerb2.ar(out[0], out[1], mix, room, damp, amp) * env;
 	Out.ar(12, out);
 }).store;
@@ -109,8 +109,17 @@ SynthDef("bpf", {
 	arg freq=440, rq=0.4, amp = 1.0;
 	var env, out;
 	out = InFeedback.ar(3, 2);
-	env = EnvGen.ar(Env.perc(0.01, 2.0, 0.9), doneAction:2);
+	env = EnvGen.ar(Env.perc(0.01, 2.0, 1.2), doneAction:2);
 	out = RLPF.ar(out, freq, rq).dup() * env;
+	Out.ar(12, out);
+}).store;
+
+SynthDef("distort", {
+	arg gain=128, amp = 1.0;
+	var env, out;
+	out = InFeedback.ar(3, 2);
+	env = EnvGen.ar(Env.perc(0.01, 2.0, 0.1), doneAction:2);
+	out = (out*gain).softclip().dup() * env;
 	Out.ar(12, out);
 }).store;
 

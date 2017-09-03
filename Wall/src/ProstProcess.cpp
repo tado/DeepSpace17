@@ -127,7 +127,7 @@ void PostProcess::addFx(int type, int id) {
 		switch (type) {
 		case 0:
 			postFx = new ofxSCSynth("comb");
-			postFx->set("delaytime", ofRandom(0.03, 0.06));
+			postFx->set("delaytime", ofRandom(0.02, 0.06));
 			postFx->create(0, 0);
 			break;
 		case 1:
@@ -136,18 +136,19 @@ void PostProcess::addFx(int type, int id) {
 			postFx->create(0, 0);
 			break;
 		case 2:
-			postFx = new ofxSCSynth("rev");
+			postFx = new ofxSCSynth("distort");
 			postFx->create(0, 0);
 			break;
 		case 3:
 			postFx = new ofxSCSynth("bpf");
-			postFx->set("freq", ofRandom(110, 220));
+			postFx->set("freq", ofRandom(8000, 16000));
 			postFx->set("rq", 0.1);
 			postFx->create(0, 0);
 			break;
 		case 4:
-			postFx = new ofxSCSynth("comb");
-			postFx->set("delaytime", ofRandom(0.01, 0.02));
+			postFx = new ofxSCSynth("bpf");
+			postFx->set("freq", ofRandom(200, 800));
+			postFx->set("rq", 0.1);
 			postFx->create(0, 0);
 			break;
 		}
