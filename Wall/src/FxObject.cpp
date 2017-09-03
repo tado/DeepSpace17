@@ -5,7 +5,7 @@ FxObject::FxObject(int id) {
 	ofApp *app = ((ofApp*)ofGetAppPtr());
 
 	this->id = id;
-	this->type = app->objectController->fxObjects.size() % 7;
+	this->type = app->objectController->fxObjects.size() % 5;
 }
 
 void FxObject::update() {

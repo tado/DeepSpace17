@@ -2,7 +2,6 @@
 SynthDef("moog", {
 	arg base = 40, freq = 100, gain = 1.0, mul = 1.0, detune=1.01, gate=1, pan = 0;
 	var env, sig1, sig2, sig3, out;
-
 	env = EnvGen.kr(Env.new([0,1], [2], 'sine'));
 	sig1 = MoogFF.ar(Pulse.ar([base, base*detune], 0.3), freq, gain, 0, mul);
 	sig2 = MoogFF.ar(Pulse.ar([base * 3.0, base * 3.0 * detune], 0.7), freq, gain, 0, mul);
@@ -80,7 +79,7 @@ SynthDef("comb", {
 	arg delaytime = 0.05;
 	var env, out;
 	out = InFeedback.ar(3, 2);
-	env = EnvGen.ar(Env.perc(0.01, 2.0, 0.75), doneAction:2);
+	env = EnvGen.ar(Env.perc(0.01, 2.0, 0.85), doneAction:2);
 	out = CombL.ar(out, 1.0,  [delaytime, delaytime * 1.001], 5) * env;
 	out = out.dup;
 	Out.ar(12, out);
