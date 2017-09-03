@@ -95,6 +95,7 @@ void PostProcess::updateFx(int type, ofVec2f pos) {
 }
 
 void PostProcess::addFx(int type, int id) {
+	ofApp *app = ((ofApp*)ofGetAppPtr());
 	resetPostProcess();
 	int n = type % 5;
 	switch (n) {
@@ -139,13 +140,14 @@ void PostProcess::addFx(int type, int id) {
 			postFx->create(0, 0);
 			break;
 		case 3:
-			postFx = new ofxSCSynth("comb");
-			postFx->set("delaytime", ofRandom(0.06, 0.12));
+			postFx = new ofxSCSynth("bpf");
+			postFx->set("freq", ofRandom(110, 220));
+			postFx->set("rq", 0.1);
 			postFx->create(0, 0);
 			break;
 		case 4:
 			postFx = new ofxSCSynth("comb");
-			postFx->set("delaytime", ofRandom(0.1, 0.2));
+			postFx->set("delaytime", ofRandom(0.01, 0.02));
 			postFx->create(0, 0);
 			break;
 		}

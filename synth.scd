@@ -79,8 +79,8 @@ SynthDef("comb", {
 	arg delaytime = 0.05;
 	var env, out;
 	out = InFeedback.ar(3, 2);
-	env = EnvGen.ar(Env.perc(0.01, 2.0, 0.85), doneAction:2);
-	out = CombL.ar(out, 1.0,  [delaytime, delaytime * 1.001], 5) * env;
+	env = EnvGen.ar(Env.perc(0.01, 2.0, 0.9), doneAction:2);
+	out = CombL.ar(out, 1.0,  [delaytime, delaytime * 1.5], 5) * env;
 	out = out.dup;
 	Out.ar(12, out);
 }).store;
@@ -89,28 +89,36 @@ SynthDef("am", {
 	arg ringFreq = 8.0;
 	var modulator, env, out;
 	out = InFeedback.ar(3, 2);
-	env = EnvGen.ar(Env.perc(0.01, 2.0, 1.0), doneAction:2);
-	modulator = SinOsc.ar([ringFreq, ringFreq * 1.01], [0, 0.5pi]) * 1.5;
+	env = EnvGen.ar(Env.perc(0.01, 2.0, 0.9), doneAction:2);
+	modulator = SinOsc.ar([ringFreq, ringFreq * 1.01], [0, 0.5pi]);
 	out = out ring1: modulator * env;
 	out = out.dup;
 	Out.ar(12, out);
 }).store;
 
 SynthDef("rev", {
-	arg mix = 1.0, room = 12.0, damp = 0.0, amp = 1.0;
+	arg mix = 1.0, room = 20.0, damp = 0.0, amp = 1.0;
 	var env, out;
 	out = InFeedback.ar(3, 2);
-	env = EnvGen.ar(Env.perc(0.01, 2.0, 1.0), doneAction:2);
+	env = EnvGen.ar(Env.perc(0.01, 2.0, 0.9), doneAction:2);
 	out = FreeVerb2.ar(out[0], out[1], mix, room, damp, amp) * env;
 	Out.ar(12, out);
 }).store;
 
+SynthDef("bpf", {
+	arg freq=440, rq=0.4, amp = 1.0;
+	var env, out;
+	out = InFeedback.ar(3, 2);
+	env = EnvGen.ar(Env.perc(0.01, 2.0, 0.9), doneAction:2);
+	out = RLPF.ar(out, freq, rq).dup() * env;
+	Out.ar(12, out);
+}).store;
 
 SynthDef("mix", {
-	arg amp = 0.75;
+	arg amp = 0.75, gate=1;
 	var in0, in1, out;
-	in0 = InFeedback.ar(10, 2);
-	in1 = InFeedback.ar(12, 2);
+	in0 = InFeedback.ar(10, 2); //* gate;
+	in1 = InFeedback.ar(12, 2); //* (1 - gate);
 	out = (in0 + in1) * amp;
 	out = Compander.ar(out);
 	Out.ar(0, out);
