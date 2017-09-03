@@ -4,7 +4,7 @@ void ofApp::setup(){
 	ofBackground(0);
 	ofSetFrameRate(60);
 	ofHideCursor();
-	showDebug = true;
+	showDebug = false;
 
 	//boot sc server
 	server = new ofxSCSynthServer();

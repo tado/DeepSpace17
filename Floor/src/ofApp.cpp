@@ -16,6 +16,9 @@ void ofApp::setup() {
 	gui.loadFromFile("settings.xml");
 	showGui = false;
 
+	//object controller
+	objectController = new ObjectController();
+
 	//View
 	skeletonView = new SkeletonView();
 	drawCode = new DrawCode();

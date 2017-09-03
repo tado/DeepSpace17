@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "OSCSender.h"
+#include "ObjectController.h"
 #include "SkeletonView.h"
 #include "DrawCode.h"
 #include "ofxGui.h"
@@ -14,6 +15,7 @@ public:
 	void keyReleased(int key);
 
 	OSCSender *oscSender;
+	ObjectController *objectController;
 	SkeletonView *skeletonView;
 	DrawCode *drawCode;
 	ofxPanel gui;
