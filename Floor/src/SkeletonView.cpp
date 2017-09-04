@@ -7,10 +7,10 @@ SkeletonView::SkeletonView(){
 void SkeletonView::draw() {
 	ofApp *app = ((ofApp*)ofGetAppPtr());
 	float circleSize = ofGetWidth() / 32.0;
-	ofSetColor(255);
 	ofSetCircleResolution(64);
 	ofNoFill();
 	ofSetLineWidth(4);
+	/*
 	ofSetColor(100);
 	//draw circle  
 	for (auto it = app->oscSender->cursorList.begin(); it != app->oscSender->cursorList.end(); it++) {
@@ -21,6 +21,7 @@ void SkeletonView::draw() {
 		ofxTuioObject *blob = (*it);
 		ofDrawCircle(blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight(), circleSize);
 	}
+	*/
 
 	//draw lines
 	ofNoFill();

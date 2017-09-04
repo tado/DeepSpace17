@@ -67,8 +67,10 @@ SynthDef("ratio",{
 }).store;
 
 SynthDef("fx", {
-    var in, out;
-    in = InFeedback.ar(3, 2);
+    var mic, in, out;
+    //in = InFeedback.ar(3, 2);
+	mic = In.ar(0, 2);
+	in = In.ar(3, 2);
     //8.do({out = AllpassL.ar(in, 0.1, LFNoise2.kr([rrand(0.0, 0.1),rrand(0.0, 0.1)],0.01,0.06), 2.0) });
     out = FreeVerb2.ar(in[0], in[1], 0.25, 2.0, 0.5, 1.0);
     Out.ar(10, out);

@@ -59,7 +59,8 @@ void ObjectController::addObject(int id) {
 
 		FloorObject *o = new FloorObject(id, type);
 		ugenObjects.push_back(o);
-	} else {
+	}
+	else {
 		int type = fxObjects.size() % 5 + 3;
 		FloorObject *o = new FloorObject(id, type);
 		fxObjects.push_back(o);
