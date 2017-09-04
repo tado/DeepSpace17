@@ -32,3 +32,12 @@ void ObjectController::addObject(int id) {
 	}
 }
 
+void ObjectController::removeObject(int id) {
+	for (int i = 0; i < floorObjects.size(); i++) {
+		if (floorObjects[i]->id == id) {
+			delete floorObjects[i];
+			floorObjects.erase(floorObjects.begin() + i);
+		}
+	}
+}
+

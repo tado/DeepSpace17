@@ -56,6 +56,9 @@ void OSCSender::objectAdded(ofxTuioObject & tuioObject) {
 	m.setAddress("/floor/objectAdded");
 	m.addInt32Arg(tuioObject.getFiducialId());
 	sender.sendMessage(m, false);
+
+	ofApp *app = ((ofApp*)ofGetAppPtr());
+	app->objectController->addObject(tuioObject.getFiducialId());
 }
 void OSCSender::objectRemoved(ofxTuioObject & tuioObject) {
 	log = " object removed: " + ofToString(tuioObject.getFiducialId()) +
@@ -66,6 +69,9 @@ void OSCSender::objectRemoved(ofxTuioObject & tuioObject) {
 	m.setAddress("/floor/objectRemoved");
 	m.addInt32Arg(tuioObject.getFiducialId());
 	sender.sendMessage(m, false);
+
+	ofApp *app = ((ofApp*)ofGetAppPtr());
+	app->objectController->removeObject(tuioObject.getFiducialId());
 }
 void OSCSender::objectUpdated(ofxTuioObject & tuioObject) {
 	log = " object updated: " + ofToString(tuioObject.getFiducialId()) +
@@ -87,6 +93,9 @@ void OSCSender::tuioAdded(ofxTuioCursor & tuioCursor) {
 	m.setAddress("/floor/tuioAdded");
 	m.addInt32Arg(tuioCursor.getFingerId() + 64);
 	sender.sendMessage(m, false);
+
+	ofApp *app = ((ofApp*)ofGetAppPtr());
+	app->objectController->addObject(tuioCursor.getFingerId());
 }
 void OSCSender::tuioRemoved(ofxTuioCursor & tuioCursor) {
 	log = " cursor removed: " + ofToString(tuioCursor.getFingerId()) +
@@ -96,6 +105,9 @@ void OSCSender::tuioRemoved(ofxTuioCursor & tuioCursor) {
 	m.setAddress("/floor/tuioRemoved");
 	m.addInt32Arg(tuioCursor.getFingerId() + 64);
 	sender.sendMessage(m, false);
+
+	ofApp *app = ((ofApp*)ofGetAppPtr());
+	app->objectController->removeObject(tuioCursor.getFingerId());
 }
 void OSCSender::tuioUpdated(ofxTuioCursor & tuioCursor) {
 	log = " cursor updated: " + ofToString(tuioCursor.getFingerId()) +

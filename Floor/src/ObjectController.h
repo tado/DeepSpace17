@@ -15,6 +15,7 @@ class ObjectController{
 public:
 	ObjectController();
 	void addObject(int id);
+	void removeObject(int id);
 
 	vector<FloorObject *> floorObjects;
 	int ugenMax;

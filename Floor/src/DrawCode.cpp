@@ -6,12 +6,18 @@ DrawCode::DrawCode() {
 
 	string c0 =
 		R"GLSL(
-//GLSL: Blink
+//GLSL: Circle
 void main() {
-    vec2 st = gl_FragCoord.xy/resolution.x;
-    float dist = length(vec2(0.5, 0.5) - mouse);
-    float br = pow(rand(time), 50.0 + (dist * 50.0)) * 1.0;
-    gl_FragColor = vec4(vec3(br), 1.0);
+    vec2 st = gl_FragCoord.xy / resolution.x;
+    float freq = 1.5 - length(vec2(0.5, 0.5) - mouse) * 2.0;
+    vec2 pos = vec2(st) * freq;
+    float br = 0.8 / num;
+    float speed = 1.75;
+    float gain = 12.1 - (length(vec2(0.5, 0.5) - mouse) * 12.0);
+    float r = mod(snoise(vec3(pos.x, pos.y, time * speed + 0.0)) * gain, 2.0);
+    float g = mod(snoise(vec3(pos.x, pos.y, time * speed + 1.0)) * gain, 2.0);
+    float b = mod(snoise(vec3(pos.x, pos.y, time * speed + 2.0)) * gain, 2.0);
+    gl_FragColor = vec4(vec3(r * br, g * br, b * br), 1.0);
 }
 )GLSL";
 	code.push_back(c0);
@@ -35,18 +41,12 @@ void main() {
 
 	string c2 =
 		R"GLSL(
-//GLSL: Circle
+//GLSL: Blink
 void main() {
-    vec2 st = gl_FragCoord.xy / resolution.x;
-    float freq = 1.5 - length(vec2(0.5, 0.5) - mouse) * 2.0;
-    vec2 pos = vec2(st) * freq;
-    float br = 0.8 / num;
-    float speed = 1.75;
-    float gain = 12.1 - (length(vec2(0.5, 0.5) - mouse) * 12.0);
-    float r = mod(snoise(vec3(pos.x, pos.y, time * speed + 0.0)) * gain, 2.0);
-    float g = mod(snoise(vec3(pos.x, pos.y, time * speed + 1.0)) * gain, 2.0);
-    float b = mod(snoise(vec3(pos.x, pos.y, time * speed + 2.0)) * gain, 2.0);
-    gl_FragColor = vec4(vec3(r * br, g * br, b * br), 1.0);
+    vec2 st = gl_FragCoord.xy/resolution.x;
+    float dist = length(vec2(0.5, 0.5) - mouse);
+    float br = pow(rand(time), 50.0 + (dist * 50.0)) * 1.0;
+    gl_FragColor = vec4(vec3(br), 1.0);
 }
 )GLSL";
 	code.push_back(c2);
@@ -175,41 +175,6 @@ void main() {
 
 	string s0 =
 		R"SC(
-//SuperCollider: Blink
-SynthDef("reso", {
-    arg freq = 440, density = 0.1, gate=1, pan=0;
-    var out, env;
-    env = EnvGen.kr(Env.new([0,1], [2], 'sine'));
-    out = Resonz.ar(Array.fill(64, {Dust.ar(density)}),freq * [1, 2, 4, 8, 16], 0.01).sum * 10 * env;
-    out = Pan2.ar(out, pan);
-    out = out * EnvGen.kr(Env.asr, gate, doneAction:2);
-    Out.ar(3, out);
-}).store;
-)SC";
-	synth.push_back(s0);
-
-	string s1 =
-		R"SC(
-//SuperCollider: Moog
-SynthDef("moog", {
-    arg base = 40, freq = 100, gain = 1.0, mul = 1.0, detune=1.01, gate=1, pan = 0;
-    var env, sig1, sig2, sig3, out;
-    env = EnvGen.kr(Env.new([0,1], [2], 'sine'));
-    sig1 = MoogFF.ar(Pulse.ar([base, base*detune], 0.3), freq, gain, 0, mul);
-    sig2 = MoogFF.ar(Pulse.ar([base * 3.0, base * 3.0 * detune], 0.7), freq, gain, 0, mul);
-    out = (sig1 + sig2) * env;
-    12.do({ out = AllpassL.ar(out, 0.1, LFNoise2.kr([rrand(0.0, 0.01),rrand(0.0, 0.01)],0.01,0.06), 1.0) });
-    out = MidEQ.ar(out, 50, 0.75, 8);
-    out[0] = out[0] * (pan/2.0 - 0.5);
-    out[1] = out[1] * (pan/2.0 + 0.5);
-    out = LeakDC.ar(out)* EnvGen.kr(Env.asr, gate, doneAction:2);
-    Out.ar(3, out);
-}).store;
-)SC";
-	synth.push_back(s1);
-
-	string s2 =
-		R"SC(
 //SuperCollider: Ratio
 SynthDef("ratio",{
     arg lpf=8000, rq=0.2,atk=0.01,rel=1.0,
@@ -250,6 +215,41 @@ SynthDef("ratio",{
     out[1] = out[1] * (pan/2.0 + 0.5);
     out = (out * (fx - 1.0)) + (w * fx) * EnvGen.kr(Env.asr, gate, doneAction:2);
     Out.ar(3 , out);
+}).store;
+)SC";
+	synth.push_back(s0);
+
+	string s1 =
+		R"SC(
+//SuperCollider: Moog
+SynthDef("moog", {
+    arg base = 40, freq = 100, gain = 1.0, mul = 1.0, detune=1.01, gate=1, pan = 0;
+    var env, sig1, sig2, sig3, out;
+    env = EnvGen.kr(Env.new([0,1], [2], 'sine'));
+    sig1 = MoogFF.ar(Pulse.ar([base, base*detune], 0.3), freq, gain, 0, mul);
+    sig2 = MoogFF.ar(Pulse.ar([base * 3.0, base * 3.0 * detune], 0.7), freq, gain, 0, mul);
+    out = (sig1 + sig2) * env;
+    12.do({ out = AllpassL.ar(out, 0.1, LFNoise2.kr([rrand(0.0, 0.01),rrand(0.0, 0.01)],0.01,0.06), 1.0) });
+    out = MidEQ.ar(out, 50, 0.75, 8);
+    out[0] = out[0] * (pan/2.0 - 0.5);
+    out[1] = out[1] * (pan/2.0 + 0.5);
+    out = LeakDC.ar(out)* EnvGen.kr(Env.asr, gate, doneAction:2);
+    Out.ar(3, out);
+}).store;
+)SC";
+	synth.push_back(s1);
+
+	string s2 =
+		R"SC(
+//SuperCollider: Blink
+SynthDef("reso", {
+    arg freq = 440, density = 0.1, gate=1, pan=0;
+    var out, env;
+    env = EnvGen.kr(Env.new([0,1], [2], 'sine'));
+    out = Resonz.ar(Array.fill(64, {Dust.ar(density)}),freq * [1, 2, 4, 8, 16], 0.01).sum * 10 * env;
+    out = Pan2.ar(out, pan);
+    out = out * EnvGen.kr(Env.asr, gate, doneAction:2);
+    Out.ar(3, out);
 }).store;
 )SC";
 	synth.push_back(s2);
@@ -336,39 +336,43 @@ void DrawCode::draw() {
 	ofSetColor(255);
 	int n = 0;
 	int s = 0;
+	int i = 0;
 	for (auto it = app->oscSender->cursorList.begin(); it != app->oscSender->cursorList.end(); it++) {
+		n = app->objectController->floorObjects[i]->type;
 		//Draw GLSL code
 		ofxTuioCursor *blob = (*it);
 		font.drawString(code[n], blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight() + margin);
-		n = (n + 1) % code.size();
+		//n = (n + 1) % code.size();
 		//Draw SuperCollider code
 		ofPushMatrix();
 		ofTranslate(blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight());
 		ofRotateZ(180);
-		font.drawString(synth[s], 0, margin);
+		font.drawString(synth[n], 0, margin);
 		ofPopMatrix();
-		s = (s + 1) % code.size();
+		//s = (s + 1) % code.size();
 		//Draw x, y pos
-		font.drawString(ofToString(blob->getX()*ofGetWidth()), blob->getX()*ofGetWidth() + margin, blob->getY()*ofGetHeight());
-		font.drawString(", " + ofToString(blob->getX()*ofGetHeight()), blob->getX()*ofGetWidth() + margin + 40, blob->getY()*ofGetHeight());
+		font.drawString(ofToString(blob->getX()*ofGetWidth()), blob->getX()*ofGetWidth() + margin * 1.2, blob->getY()*ofGetHeight());
+		font.drawString(", " + ofToString(blob->getX()*ofGetHeight()), blob->getX()*ofGetWidth() + margin*1.6, blob->getY()*ofGetHeight());
+		i++;
 	}
-	n = 0;
-	s = 0;
+	i = 0;
 	for (auto it = app->oscSender->objectList.begin(); it != app->oscSender->objectList.end(); it++) {
+		n = app->objectController->floorObjects[i]->type;
 		//Draw GLSL code
 		ofxTuioObject *blob = (*it);
 		font.drawString(code[n], blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight() + margin);
-		n = (n + 1) % code.size();
+		//n = (n + 1) % code.size();
 		//Draw SuperCollider code
 		ofPushMatrix();
 		ofTranslate(blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight());
 		ofRotateZ(180);
-		font.drawString(synth[s], 0, margin);
+		font.drawString(synth[n], 0, margin);
 		ofPopMatrix();
-		s = (s + 1) % code.size();
+		//s = (s + 1) % code.size();
 		//Draw x, y pos
-		font.drawString(ofToString(blob->getX()*ofGetWidth()), blob->getX()*ofGetWidth() + margin, blob->getY()*ofGetHeight());
-		font.drawString(", " + ofToString(blob->getX()*ofGetHeight()), blob->getX()*ofGetWidth() + margin + 40, blob->getY()*ofGetHeight());
+		font.drawString(ofToString(blob->getX()*ofGetWidth()), blob->getX()*ofGetWidth() + margin * 1.2, blob->getY()*ofGetHeight());
+		font.drawString(", " + ofToString(blob->getX()*ofGetHeight()), blob->getX()*ofGetWidth() + margin*1.6, blob->getY()*ofGetHeight());
+		i++;
 	}
 
 	//draw length
