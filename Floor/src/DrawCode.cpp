@@ -332,8 +332,8 @@ SynthDef("rev", {
 void DrawCode::draw() {
 	ofApp *app = ((ofApp*)ofGetAppPtr());
 	int margin = ofGetWidth() / 30;
-	//draw code
 	ofSetColor(255);
+	//draw code
 	for (int i = 0; i < app->objectController->ugenObjects.size(); i++) {
 		int type = app->objectController->ugenObjects[i]->type;
 		ofVec2f pos = app->objectController->ugenObjects[i]->pos;
@@ -349,6 +349,7 @@ void DrawCode::draw() {
 		font.drawString(ofToString(pos.x * ofGetWidth()), pos.x * ofGetWidth() + margin * 1.2, pos.y * ofGetHeight());
 		font.drawString(", " + ofToString(pos.x * ofGetHeight()), pos.x * ofGetWidth() + margin*1.6, pos.y * ofGetHeight());
 	}
+	ofSetColor(0, 255, 255);
 	for (int i = 0; i < app->objectController->fxObjects.size(); i++) {
 		int type = app->objectController->fxObjects[i]->type;
 		ofVec2f pos = app->objectController->fxObjects[i]->pos;
@@ -415,6 +416,7 @@ void DrawCode::draw() {
 	*/
 
 	//draw length
+	ofSetColor(255);
 	for (auto i = app->oscSender->cursorList.begin(); i != app->oscSender->cursorList.end(); i++) {
 		for (auto j = i; j != app->oscSender->cursorList.end(); j++) {
 			ofxTuioCursor *blobi = (*i);
