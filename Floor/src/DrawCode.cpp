@@ -334,22 +334,57 @@ void DrawCode::draw() {
 	int margin = ofGetWidth() / 30;
 	//draw code
 	ofSetColor(255);
+	for (int i = 0; i < app->objectController->ugenObjects.size(); i++) {
+		int type = app->objectController->ugenObjects[i]->type;
+		ofVec2f pos = app->objectController->ugenObjects[i]->pos;
+		//draw GLSL
+		font.drawString(code[type], pos.x * ofGetWidth(), pos.y * ofGetHeight() + margin);
+		//draw SC
+		ofPushMatrix();
+		ofTranslate(pos.x * ofGetWidth(), pos.y * ofGetHeight());
+		ofRotateZ(180);
+		font.drawString(synth[type], 0, margin);
+		ofPopMatrix();
+		//Draw x, y pos
+		font.drawString(ofToString(pos.x * ofGetWidth()), pos.x * ofGetWidth() + margin * 1.2, pos.y * ofGetHeight());
+		font.drawString(", " + ofToString(pos.x * ofGetHeight()), pos.x * ofGetWidth() + margin*1.6, pos.y * ofGetHeight());
+	}
+	for (int i = 0; i < app->objectController->fxObjects.size(); i++) {
+		int type = app->objectController->fxObjects[i]->type;
+		ofVec2f pos = app->objectController->fxObjects[i]->pos;
+		//draw GLSL
+		font.drawString(code[type], pos.x * ofGetWidth(), pos.y * ofGetHeight() + margin);
+		//draw SC
+		ofPushMatrix();
+		ofTranslate(pos.x * ofGetWidth(), pos.y * ofGetHeight());
+		ofRotateZ(180);
+		font.drawString(synth[type], 0, margin);
+		ofPopMatrix();
+		//Draw x, y pos
+		font.drawString(ofToString(pos.x * ofGetWidth()), pos.x * ofGetWidth() + margin * 1.2, pos.y * ofGetHeight());
+		font.drawString(", " + ofToString(pos.x * ofGetHeight()), pos.x * ofGetWidth() + margin*1.6, pos.y * ofGetHeight());
+	}
+
+	/*
 	int n = 0;
 	int s = 0;
 	int i = 0;
 	for (auto it = app->oscSender->cursorList.begin(); it != app->oscSender->cursorList.end(); it++) {
-		n = app->objectController->floorObjects[i]->type;
-		//Draw GLSL code
+		if (i < app->objectController->ugenObjects.size()) {
+			n = app->objectController->ugenObjects[i]->type;
+		}
+		else {
+			n = app->objectController->fxObjects[i - app->objectController->ugenObjects.size()]->type;
+		}
+ 		//Draw GLSL code
 		ofxTuioCursor *blob = (*it);
 		font.drawString(code[n], blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight() + margin);
-		//n = (n + 1) % code.size();
 		//Draw SuperCollider code
 		ofPushMatrix();
 		ofTranslate(blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight());
 		ofRotateZ(180);
 		font.drawString(synth[n], 0, margin);
 		ofPopMatrix();
-		//s = (s + 1) % code.size();
 		//Draw x, y pos
 		font.drawString(ofToString(blob->getX()*ofGetWidth()), blob->getX()*ofGetWidth() + margin * 1.2, blob->getY()*ofGetHeight());
 		font.drawString(", " + ofToString(blob->getX()*ofGetHeight()), blob->getX()*ofGetWidth() + margin*1.6, blob->getY()*ofGetHeight());
@@ -357,23 +392,27 @@ void DrawCode::draw() {
 	}
 	i = 0;
 	for (auto it = app->oscSender->objectList.begin(); it != app->oscSender->objectList.end(); it++) {
-		n = app->objectController->floorObjects[i]->type;
+		if (i < app->objectController->ugenObjects.size()) {
+			n = app->objectController->ugenObjects[i]->type;
+		}
+		else {
+			n = app->objectController->fxObjects[i - app->objectController->ugenObjects.size()]->type;
+		}
 		//Draw GLSL code
 		ofxTuioObject *blob = (*it);
 		font.drawString(code[n], blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight() + margin);
-		//n = (n + 1) % code.size();
 		//Draw SuperCollider code
 		ofPushMatrix();
 		ofTranslate(blob->getX()*ofGetWidth(), blob->getY()*ofGetHeight());
 		ofRotateZ(180);
 		font.drawString(synth[n], 0, margin);
 		ofPopMatrix();
-		//s = (s + 1) % code.size();
 		//Draw x, y pos
 		font.drawString(ofToString(blob->getX()*ofGetWidth()), blob->getX()*ofGetWidth() + margin * 1.2, blob->getY()*ofGetHeight());
 		font.drawString(", " + ofToString(blob->getX()*ofGetHeight()), blob->getX()*ofGetWidth() + margin*1.6, blob->getY()*ofGetHeight());
 		i++;
 	}
+	*/
 
 	//draw length
 	for (auto i = app->oscSender->cursorList.begin(); i != app->oscSender->cursorList.end(); i++) {

@@ -29,6 +29,7 @@ void ofApp::setup() {
 
 void ofApp::update() {
 	oscSender->update();
+	objectController->update();
 }
 
 void ofApp::draw() {
