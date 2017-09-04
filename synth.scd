@@ -74,7 +74,6 @@ SynthDef("fx", {
 	Out.ar(10, out);
 }).store;
 
-
 SynthDef("comb", {
 	arg delaytime = 0.05;
 	var env, out;

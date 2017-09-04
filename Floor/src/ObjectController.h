@@ -3,15 +3,20 @@
 
 class FloorObject {
 public:
-	string code;
+	FloorObject(int id, int type) {
+		this->type = type;
+		this->id = id;
+	}
+	int type;
 	int id;
 };
 
 class ObjectController{
 public:
 	ObjectController();
-	void addObject();
+	void addObject(int id);
 
-	vector<FloorObject> objects;
+	vector<FloorObject *> floorObjects;
+	int ugenMax;
 };
 
