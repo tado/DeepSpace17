@@ -1,4 +1,0 @@
-ofxGLSLSimplexNoise
-ofxISF
-ofxOsc
-ofxPostProcessing
